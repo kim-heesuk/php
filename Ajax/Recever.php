@@ -35,11 +35,7 @@ function handlePostRequest() {
 		
     $input = json_decode(file_get_contents("php://input"), true);
     // 데이터 유효성 검사 및 저장 (예시)
-	
-	if (getAuthenticationHeader()==True){
-	echo json_encode(["message" => "No Access"]);
-	}
-	
+	if ($_ENV['OS']!="Windows_NT"){
 	include "./conn.php";
     $status=0;
     if ($conn->connect_error) {
@@ -48,13 +44,22 @@ function handlePostRequest() {
     }else{
         $status=1;
     }
+	}
+	$tablename=$input['table'];
 	
-	
-    if (isset($input["method"])) {
-         $tablename=$input['method'];
+    if (isset($input["table"])) {
+         $tablename=$input["table"];
         if ($tablename=="codename"){
-            $result=Revcodename($data,$conn);
-
+            
+			if ($_ENV['OS']!="Windows_NT"){
+			$result=Revcodename($input,$conn);
+			}else{
+			$result=Revcodename($input,"dd");
+			}
+			echo json_encode($result);
+   			
+			
+			
         }else if($tablename=="corrcare"){
 
         }else if($tablename=="divinfo"){
@@ -68,35 +73,42 @@ function handlePostRequest() {
         }else if($tablename=="trendyear"){
 
         }
-        
-        
-        
-        
-        echo json_encode(["message" => "Item created", "data" => $data]);
+       
     } else {
         http_response_code(400);
         echo json_encode(["message" => "Invalid input"]);
     }
+	
 }
 
 
 function Revcodename($data,$conn){
-
+$result=array();
+$keys=array_keys($data);
+$sql="insert into etfvari.".$data['table']."(";
+$colstr="";
+$valstr="";
+for ($i=0; $i < count($keys)-1; $i++){
+$colstr .=$keys[$i].",";
+$valstr .=" :".$keys[$i].",";
 }
-function getAuthenticationHeader() {
-### 인증성공은 False 인증실패 True
-$result=True;
-    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-		
-        if (trim($_SERVER['HTTP_AUTHORIZATION'])=="ZXRmdHJhZGVybWFuYWdlcjpxbndrZWhsd2s="){
-		$result=False;
-		}else{
-		$result=True;
-		}
-		
-    }else{
-	$result=True;
+$colstr=$sql. rtrim($colstr,",").") values(";
+$valstr=rtrim($valstr,",").")";
+
+
+$stmt = $conn->prepare($sql);
+foreach ($data as $key => $value) {
+	if ($key!="table"){
+		$stmt->bindValue(':' . $key, $value);
+	}
+}
+	try {
+		$stmt->execute();
+		$result["message"]= "OK";
+	} catch (PDOException $e) {
+		$result["message"]= $e->getMessage();
 	}
 return $result;
 }
+
 ?>
