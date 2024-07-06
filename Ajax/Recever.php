@@ -35,7 +35,7 @@ function handlePostRequest() {
 		
     $input = json_decode(file_get_contents("php://input"), true);
     // 데이터 유효성 검사 및 저장 (예시)
-	if ($_ENV['OS']!="Windows_NT"){
+	if ($_SERVER['DOCUMENT_ROOT']!="/workspace"){
 	include "./conn.php";
     $status=0;
     if ($conn->connect_error) {
@@ -51,7 +51,7 @@ function handlePostRequest() {
          $tablename=$input["table"];
         if ($tablename=="codename"){
             
-			if ($_ENV['OS']!="Windows_NT"){
+			if ($_SERVER['DOCUMENT_ROOT']!="/workspace"){
 			$result=Revcodename($input,$conn);
 			}else{
 			$result=Revcodename($input,"dd");
