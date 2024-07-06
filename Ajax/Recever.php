@@ -31,7 +31,16 @@ switch ($request_method) {
 
 
 function handlePostRequest() {
-    include "./conn.php";
+    
+		
+    $input = json_decode(file_get_contents("php://input"), true);
+    // 데이터 유효성 검사 및 저장 (예시)
+	
+	if (getAuthenticationHeader()==True){
+	echo json_encode(["message" => "No Access"]);
+	}
+	
+	include "./conn.php";
     $status=0;
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -39,11 +48,6 @@ function handlePostRequest() {
     }else{
         $status=1;
     }
-		
-    $input = json_decode(file_get_contents("php://input"), true);
-    // 데이터 유효성 검사 및 저장 (예시)
-	
-	getAuthenticationHeader();
 	
 	
     if (isset($input["method"])) {
@@ -93,8 +97,6 @@ $result=True;
     }else{
 	$result=True;
 	}
-
-echo json_encode(["message" => $result]);
 return $result;
 }
 ?>
