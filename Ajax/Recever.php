@@ -43,9 +43,9 @@ function handlePostRequest() {
     $input = json_decode(file_get_contents("php://input"), true);
     // 데이터 유효성 검사 및 저장 (예시)
 	
-	if (getAuthenticationHeader()){
-	echo json_encode(["message" => "Invalid Access"]);
-	}
+	getAuthenticationHeader();
+	
+	
     if (isset($input["method"])) {
          $tablename=$input['method'];
         if ($tablename=="codename"){
@@ -83,11 +83,14 @@ function getAuthenticationHeader() {
 ### 인증성공은 False 인증실패 True
 $result=True;
     if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+		echo json_encode(["message" => $_SERVER['HTTP_AUTHORIZATION']]);
+		/*
         if (trim($_SERVER['HTTP_AUTHORIZATION'])=="ZXRmdHJhZGVybWFuYWdlcjpxbndrZWhsd2s="){
 		$result=False;
 		}else{
 		$result=True;
 		}
+		*/
     }else{
 	$result=True;
 	}
