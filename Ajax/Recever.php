@@ -30,32 +30,20 @@ switch ($request_method) {
 }
 
 
+
+
 function handlePostRequest() {
     
 		
-    $input = json_decode(file_get_contents("php://input"), true);
+   $input = json_decode(file_get_contents("php://input"), true);
     // 데이터 유효성 검사 및 저장 (예시)
-	if ($_SERVER['DOCUMENT_ROOT']!="/workspace"){
-	include "./conn.php";
-    $status=0;
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-        $status=0;
-    }else{
-        $status=1;
-    }
-	}
-	$tablename=$input['table'];
 	
+	include "./conn.php";
+	$tablename=$input['table'];
     if (isset($input["table"])) {
          $tablename=$input["table"];
         if ($tablename=="codename"){
-            
-			if ($_SERVER['DOCUMENT_ROOT']!="/workspace"){
 			$result=Revcodename($input,$conn);
-			}else{
-			$result=Revcodename($input,"dd");
-			}
 			echo json_encode($result);
    			
 			
@@ -75,8 +63,8 @@ function handlePostRequest() {
         }
        
     } else {
-        http_response_code(400);
-        echo json_encode(["message" => "Invalid input"]);
+        //http_response_code(400);
+        //echo json_encode(["message" => "Invalid input"]);
     }
 	
 }
@@ -94,11 +82,14 @@ $valstr .=" :".$keys[$i].",";
 }
 $colstr=$sql. rtrim($colstr,",").") values(";
 $valstr=rtrim($valstr,",").")";
+$sql=$colstr.$valstr;
+
 
 
 $stmt = $conn->prepare($sql);
 foreach ($data as $key => $value) {
 	if ($key!="table"){
+		//echo $key .":". $value ."\n";
 		$stmt->bindValue(':' . $key, $value);
 	}
 }
@@ -106,8 +97,10 @@ foreach ($data as $key => $value) {
 		$stmt->execute();
 		$result["message"]= "OK";
 	} catch (PDOException $e) {
-		$result["message"]= $e->getMessage();
+		$result["message"]= "NOK";
 	}
+
+	
 return $result;
 }
 
