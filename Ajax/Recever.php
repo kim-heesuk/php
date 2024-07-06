@@ -83,17 +83,18 @@ function getAuthenticationHeader() {
 ### 인증성공은 False 인증실패 True
 $result=True;
     if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-		echo json_encode(["message" => $_SERVER['HTTP_AUTHORIZATION']]);
-		/*
+		
         if (trim($_SERVER['HTTP_AUTHORIZATION'])=="ZXRmdHJhZGVybWFuYWdlcjpxbndrZWhsd2s="){
 		$result=False;
 		}else{
 		$result=True;
 		}
-		*/
+		
     }else{
 	$result=True;
 	}
+
+echo json_encode(["message" => $result]);
 return $result;
 }
 ?>
