@@ -1,5 +1,5 @@
 <?php
-$host = "localhost";
+$host = "mariadb";
 $db_name = "mysql";
 $username = "root";
 $password = "heedol12!";
