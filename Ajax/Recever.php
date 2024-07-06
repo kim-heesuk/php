@@ -31,10 +31,19 @@ switch ($request_method) {
 
 
 function handlePostRequest() {
+    include "./conn.php";
+    $status=0;
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+        $status=0;
+    }else{
+        $status=1;
+    }
+
     $input = json_decode(file_get_contents("php://input"), true);
     // 데이터 유효성 검사 및 저장 (예시)
     if (isset($input["name"])) {
-        $data = ["id" => rand(1, 100), "name" => $input["name"]];
+        $data = ["id" => $status, "name" => $input["name"]];
         echo json_encode(["message" => "Item created", "data" => $data]);
     } else {
         http_response_code(400);
