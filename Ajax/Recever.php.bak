@@ -44,7 +44,7 @@ function handlePostRequest() {
     // 데이터 유효성 검사 및 저장 (예시)
 	
 	if (getAuthenticationHeader()){
-	echo json_encode(["message" => "Invalid Access"]);
+	json_encode(["message" => "Invalid Access"]);
 	}
     if (isset($input["method"])) {
          $tablename=$input['method'];
@@ -86,10 +86,10 @@ $result=True;
         if (trim($_SERVER['HTTP_AUTHORIZATION'])=="ZXRmdHJhZGVybWFuYWdlcjpxbndrZWhsd2s="){
 		$result=False;
 		}else{
-		$result=True;
+		$result=True
 		}
     }else{
-	$result=True;
+	$result=True
 	}
 return $result;
 }
