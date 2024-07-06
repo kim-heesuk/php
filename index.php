@@ -5,7 +5,7 @@
   </head>
   <body>
 <?php
-    echo phpinfo();   
+    echo "test1 14:29분";
 ?>
   </body>
 </html>
