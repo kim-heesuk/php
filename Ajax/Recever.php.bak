@@ -30,22 +30,22 @@ switch ($request_method) {
 }
 
 
-
-
 function handlePostRequest() {
-    
-		
    $input = json_decode(file_get_contents("php://input"), true);
     // 데이터 유효성 검사 및 저장 (예시)
 	
 	include "./conn.php";
 	$tablename=$input['table'];
+	
+	
     if (isset($input["table"])) {
          $tablename=$input["table"];
         if ($tablename=="codename"){
 			$result=Revcodename($input,$conn);
 			echo json_encode($result);
         }else if($tablename=="corrcare"){
+			
+			
 			$result=Revcodename($input,$conn);
 			echo json_encode($result);
 
@@ -85,8 +85,12 @@ $keys=array_keys($data);
 $sql="insert into etfvari.".$data['table']."(";
 $colstr="";
 $valstr="";
+echo count($keys) ."\n";
+
 for ($i=0; $i < count($keys)-1; $i++){
-    if ($keys[i]!="table") {
+    echo $keys[$i] ."\n";
+	
+	if ($keys[i]!="table") {
     $colstr .=$keys[$i].",";
     $valstr .=" :".$keys[$i].",";
     }
@@ -95,6 +99,7 @@ $colstr=$sql. rtrim($colstr,",").") values(";
 $valstr=rtrim($valstr,",").")";
 $sql=$colstr.$valstr;
 
+echo $sql ."\n";
 
 
 $stmt = $conn->prepare($sql);

@@ -36,12 +36,16 @@ function handlePostRequest() {
 	
 	include "./conn.php";
 	$tablename=$input['table'];
+	
+	
     if (isset($input["table"])) {
          $tablename=$input["table"];
         if ($tablename=="codename"){
 			$result=Revcodename($input,$conn);
 			echo json_encode($result);
         }else if($tablename=="corrcare"){
+			
+			
 			$result=Revcodename($input,$conn);
 			echo json_encode($result);
 
@@ -82,7 +86,7 @@ $sql="insert into etfvari.".$data['table']."(";
 $colstr="";
 $valstr="";
 for ($i=0; $i < count($keys)-1; $i++){
-    if ($keys[i]!="table") {
+	if ($keys[$i]!="table") {
     $colstr .=$keys[$i].",";
     $valstr .=" :".$keys[$i].",";
     }
@@ -90,8 +94,6 @@ for ($i=0; $i < count($keys)-1; $i++){
 $colstr=$sql. rtrim($colstr,",").") values(";
 $valstr=rtrim($valstr,",").")";
 $sql=$colstr.$valstr;
-
-
 
 $stmt = $conn->prepare($sql);
 foreach ($data as $key => $value) {
