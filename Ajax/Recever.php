@@ -30,11 +30,7 @@ switch ($request_method) {
 }
 
 
-
-
 function handlePostRequest() {
-    
-		
    $input = json_decode(file_get_contents("php://input"), true);
     // 데이터 유효성 검사 및 저장 (예시)
 	
@@ -45,26 +41,35 @@ function handlePostRequest() {
         if ($tablename=="codename"){
 			$result=Revcodename($input,$conn);
 			echo json_encode($result);
-   			
-			
-			
         }else if($tablename=="corrcare"){
+			$result=Revcodename($input,$conn);
+			echo json_encode($result);
 
         }else if($tablename=="divinfo"){
+			$result=Revcodename($input,$conn);
+			echo json_encode($result);
 
         }else if($tablename=="divinfoyear"){
+			$result=Revcodename($input,$conn);
+			echo json_encode($result);
 
         }else if($tablename=="riskcare"){
+			$result=Revcodename($input,$conn);
+			echo json_encode($result);
 
         }else if($tablename=="trenline"){
+			$result=Revcodename($input,$conn);
+			echo json_encode($result);
 
         }else if($tablename=="trendyear"){
+			$result=Revcodename($input,$conn);
+			echo json_encode($result);
 
         }
        
     } else {
-        //http_response_code(400);
-        //echo json_encode(["message" => "Invalid input"]);
+        http_response_code(400);
+        echo json_encode(["message" => "Invalid input"]);
     }
 	
 }
@@ -77,8 +82,10 @@ $sql="insert into etfvari.".$data['table']."(";
 $colstr="";
 $valstr="";
 for ($i=0; $i < count($keys)-1; $i++){
-$colstr .=$keys[$i].",";
-$valstr .=" :".$keys[$i].",";
+    if ($keys[i]!="table") {
+    $colstr .=$keys[$i].",";
+    $valstr .=" :".$keys[$i].",";
+    }
 }
 $colstr=$sql. rtrim($colstr,",").") values(";
 $valstr=rtrim($valstr,",").")";
@@ -89,7 +96,6 @@ $sql=$colstr.$valstr;
 $stmt = $conn->prepare($sql);
 foreach ($data as $key => $value) {
 	if ($key!="table"){
-		//echo $key .":". $value ."\n";
 		$stmt->bindValue(':' . $key, $value);
 	}
 }
