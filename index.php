@@ -278,7 +278,7 @@ function TestAjax(){
 	var id="1";
 	var pw="2";
 	$.ajax({
-		url: "https://port-9000-php-ly9k6sf17e2c8f01.sel5.cloudtype.app/AjaxHtml/Recever.php",
+		url: "AjaxHtml/Recever.php",
 		type: "POST",
 		data: JSON.stringify({ id: id, pw: pw }),
 		contentType: "application/json; charset=utf-8",
