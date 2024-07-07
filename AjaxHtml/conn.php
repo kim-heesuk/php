@@ -1,18 +1,13 @@
 <?php
-/*
+
 if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
 $servername = "mariadb";
-$db_name = "mysql";
-$username = "root";
-$password = "heedol12!";
-$conn = new mysqli($servername, $username, $password, $db_name);
 }else{
-	*/
 $servername = "localhost";
+}
 $db_name = "mysql";
 $username = "root";
 $password = "heedol12!";
-//$conn = new mysqli($servername, $username, $password, $db_name);
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$db_name", $username, $password);
