@@ -103,7 +103,6 @@ include "./footer.php";
 
 <script>
 $(document).ready(function(e){ 
-$('[data-widget="pushmenu"]').PushMenu('toggle');
 	 var result=DivinfoReq();
 	 appendDataToTable(result['line']);
      var divtable=$('#divtable').DataTable({

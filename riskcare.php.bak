@@ -35,6 +35,12 @@ include "./sidebar.php";
               <div class="card-body">
                 <!-- <table id="risktable" class="table table-bordered table-striped"> !-->
 				<table id="risktable" class="display" style="width:100%">
+                <style>
+	/* Custom CSS for red text */
+	.negative-value {
+		color: red !important;
+	}
+</style>
 				  <thead>
                   <tr>
 					

@@ -24,7 +24,7 @@ echo '
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <link rel="stylesheet" href="css/jquery.dataTables.css">
+  
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -62,12 +62,5 @@ echo '
 <script src="plugins/flot/plugins/jquery.flot.resize.js"></script>
 <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
 <script src="plugins/flot/plugins/jquery.flot.pie.js"></script>
-<style>
-	/* Custom CSS for red text */
-	.negative-value {
-		color: red !important;
-	}
-</style>
-	
 </head>';
 ?>

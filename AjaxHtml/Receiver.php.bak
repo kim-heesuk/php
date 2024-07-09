@@ -1,6 +1,12 @@
 <?php
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-type: application/json; charset=utf-8");
+include "./conn.php";
+$result=riskinfo($conn);
+//print_r($result);
+
+
+/*
 $request_method = $_SERVER["REQUEST_METHOD"];
 switch ($request_method) {
     case 'GET':
@@ -10,7 +16,10 @@ switch ($request_method) {
         break;
     case 'POST':
         // POST 요청 처리
-        handlePostRequest();
+		$input = json_decode(file_get_contents('php://input'), true);
+		$request=$input['request'];
+		//echo json_encode(["message" => $request]);
+        handlePostRequest($request);
         break;
     case 'PUT':
         // PUT 요청 처리
@@ -28,11 +37,47 @@ switch ($request_method) {
         echo json_encode(["message" => "Method Not Allowed"]);
         break;
 }
-
-function handlePostRequest() {
+*/
+function handlePostRequest($request) {
 	include "./conn.php";
+	if ($request=="divinfo"){
 	$result=divinfo($conn);
 	echo json_encode($result);
+	}else if($request=="riskinfo"){
+		$result=riskinfo($conn);
+	echo json_encode($result);
+	
+	}
+	
+}
+
+function riskinfo($conn){
+$codename=array();	
+$sql="select code,name from etfvari.codename";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($results as $row) {
+	$codename[$row['code']]=$row['name'];
+	}
+
+
+
+$sql="select code,ymean,mmean,ymax,ymin,mmax,mmin,ystartmaxup,ystartmaxdown,mstartmaxup ";
+$sql .=" mstartmaxup,mstartmaxdown,yconup,ycondown,mconup,mcondown,ymaxc,yminc,mmaxc, mminc from etfvari.riskcare";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$rdata=array();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($results as $row) {
+		if(array_key_exists($row['code'],$codename)){
+			$row['code']=$codename[$row['code']];
+			$av=array_values($row);
+			$rdata[]=$av;
+		}
+	
+	}
+return $rdata;
 }
 
 function divinfo($conn){
