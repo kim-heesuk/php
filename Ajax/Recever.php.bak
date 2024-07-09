@@ -1,5 +1,5 @@
 <?php
-
+/*
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-type: application/json; charset=utf-8");
 $request_method = $_SERVER["REQUEST_METHOD"];
@@ -79,8 +79,15 @@ function handlePostRequest() {
 	
 }
 
-
-
+*/
+include "./conn.php";
+divinfo($conn);
+function divinfo($conn){
+$sql="select 종목명,substr(지급기준일,1,4) as 지급기준년,주당분배금,시가대비분배율 from etfvari.divinfo order by 종목명 asc, 지급기준일 desc";
+$stmt = $conn->prepare($sql);
+$row->$stmt->execute();
+print_r($row);
+}
 
 function Revcodename($data,$conn){
 $result=array();
