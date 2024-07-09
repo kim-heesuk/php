@@ -31,9 +31,8 @@ switch ($request_method) {
 
 function handlePostRequest() {
 	include "./conn.php";
-	echo json_encode(["message" => "시험용"]);
-	//$result=divinfo($conn);
-	//echo json_encode($result);
+	$result=divinfo($conn);
+	echo json_encode($result);
 }
 
 function divinfo($conn){
