@@ -106,7 +106,6 @@ include "./footer.php";
 <script>
 $(document).ready(function(e){ 
 	 var result=DivinfoReq();
-	 //console.log(result);
 	 appendDataToTable(result['line']);
      var divtable=$('#divtable').DataTable({
       "responsive": true, 
@@ -175,6 +174,7 @@ function DivinfoReq(){
 		async: false, // 동기식 호출
 		success: function(redata){
 			result=redata;
+			console.log(result);
 			
 		},
 		error: function(xhr, status, error){
