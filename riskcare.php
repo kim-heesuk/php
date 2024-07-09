@@ -40,44 +40,33 @@ include "./sidebar.php";
 					
                     <th rowspan=2>종목명</th>
                     <th colspan=2>평균수익</th>
-                    
 					<th colspan=2>년중최대</br>손익</th>
 					<th colspan=2>월중최대</br>손익</th>
 					<th colspan=2>년초년말</br>최대손익</th>
 					<th colspan=2>월초월말</br>최대손익</th>
-					<th colspan=2>년연속</br>손익</th>
-					<th colspan=2>월연속</br>손익</th>
-					<th colspan=2>년누적</br>횟수</th>
-					<th colspan=2>월누적</br>횟수</th>
-					<!--
-					<th colspan=2>년중최대손익</th>
-					<th colspan=2>월중최대손익</th>
-					<th colspan=2>년초년말최대손익</th>
-					<th colspan=2>월초월말최대손익</th>
-					<th colspan=2>년연속손익</th>
-					<th colspan=2>월연속손익</th>
-					<th colspan=2>년누적횟수</th>
-					<th colspan=2>월누적횟수</th>
-					!-->
+					<th colspan=2>년연속</br>손익횟수</th>
+					<th colspan=2>월연속</br>손익횟수</th>
+					<th colspan=2>년누적</br>손익횟수</th>
+					<th colspan=2>월누적</br>손익횟수</th>
                   </tr>
 				  
 				  <tr>
-				  <th>년</th>
+				  <th>년 </th>
 				  <th>월</th>
-				  <th>익</th>
-                  <th>손</th>
+				  <th><font color='gray'>익</font></th>
+				  <th><font color='gray'>손</font></th>
                   <th>익</th>
                   <th>손</th>
-				  <th>익</th>
-                  <th>실</th>
+				  <th><font color='gray'>익</font></th>
+				  <th><font color='gray'>손</font></th>
                   <th>익</th>
-                  <th>실</th>
-				  <th>익</th>
                   <th>손</th>
+				  <th><font color='gray'>익</font></th>
+                  <th><font color='gray'>손</font></th>
 				  <th>익</th>
 				  <th>손</th>
-				  <th>익</th>
-                  <th>손</th>
+				  <th><font color='gray'>익</font></th>
+                  <th><font color='gray'>손</font></th>
 				  <th>익</th>
                   <th>손</th>
 				  
@@ -179,27 +168,21 @@ function appendDataToTable(data) {
 		if (typeof row[16]==="object"){
 			row[16]=0;
 		}
+		
 		var newRow = '<tr>' +
-			'<td>' + row[0] + '</td>' +
-			'<td>' + row[1] + '</td>' +
-			'<td>' + row[2] + '</td>' +
-			'<td>' + row[3] + '</td>' +
-			'<td>' + row[4] + '</td>' +
-			'<td>' + row[5] + '</td>' +
-			'<td>' + row[6] + '</td>' +
-			'<td>' + row[7] + '</td>' +
-			'<td>' + row[8] + '</td>' +
-			'<td>' + row[9] + '</td>' +
-			'<td>' + row[10] + '</td>' +
-			'<td>' + row[11] + '</td>' +
-			'<td>' + row[12] + '</td>' +
-			'<td>' + row[13] + '</td>' +
-			'<td>' + row[14] + '</td>' +
-			'<td>' + row[15] + '</td>' +
-			'<td>' + row[16] + '</td>' +
-			'<td>' + row[17] + '</td>' +
-			'<td>' + row[18] + '</td>' +
-			'</tr>';
+			'<td>' + row[0] + '</td>' ;
+			for (var i=1; i < 11; i++){
+			 if (row[i] < 0){
+			 newRow +='<td> <font color="blue">'+row[i]+'</td>';
+			 }else{
+			 newRow +='<td> <font color="red">'+row[i]+'</td>';
+			 }
+			}
+			for (var i=11; i < 19; i++){
+			newRow +='<td>'+row[i]+'</td>';
+			}
+			
+			newRow +='</tr>';
 		risktable.append(newRow);
 	});
 }
