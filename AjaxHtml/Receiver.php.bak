@@ -125,10 +125,10 @@ return $result;
 function divinfodetail($conn,$name){
 $returnvalue=array();
 if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
-$sql="select divsetday as 지급일,round(divperstock,0) as 분배금 ,divperprice as 시가대비, divclass as 구분, round(curprice,0) as 기준가 from etfvari.divinfo where name= ?";
+$sql="select distinct divsetday as 지급일,round(divperstock,0) as 분배금 ,divperprice as 시가대비, divclass as 구분, round(curprice,0) as 기준가 from etfvari.divinfo where name= ? ";
 $key="name";
 }else{
-$sql="select 지급기준일 as 지급일,round(주당분배금,0) as 분배금,시가대비분배율 as 시가대비,배당구분 as 구분, round(결산과표기준가,0) as 기준가 from etfvari.divinfo where 종목명=? ";
+$sql="select distinct 지급기준일 as 지급일,round(주당분배금,0) as 분배금,시가대비분배율 as 시가대비,배당구분 as 구분, round(결산과표기준가,0) as 기준가 from etfvari.divinfo where 종목명=? order by 지급기준일 desc";
 $key="종목명";
 }
 $stmt = $conn->prepare($sql);
