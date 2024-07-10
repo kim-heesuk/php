@@ -90,7 +90,7 @@ $valstr="";
 for ($i=0; $i < count($keys)-1; $i++){
 	if ($keys[$i]!="table") {
     $colstr .=$keys[$i].",";
-    $valstr .=" :".$keys[$i].",";
+    $valstr .=" :".$data[$keys[$i]].",";
     }
 }
 $colstr=$sql. rtrim($colstr,",").") values(";
