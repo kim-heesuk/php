@@ -94,7 +94,7 @@ for ($i=0; $i < count($keys)-1; $i++){
     }
 }
 $colstr=rtrim($colstr,",").") values(";
-$valstr=rtrim($valstr,",").")";
+$valstr = rtrim($valstr, ",") . ")";
 $sql=$sql.$colstr.$valstr;
 
 $stmt = $conn->prepare($sql);
