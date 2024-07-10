@@ -81,7 +81,11 @@ return $rdata;
 }
 
 function divinfo($conn){
-$sql="select 종목명,substr(지급기준일,1,4) as 지급기준년,주당분배금,시가대비분배율 from etfvari.divinfo order by 종목명 asc, 지급기준일 ";
+if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
+$sql="select name as 종목명,substr(divsetday,1,4) as 지급기준년,divperstock as 주당분배금 ,divperprice as 시가대비분배율 from etfvari.divinfo order by name asc, divperprice desc ";
+}else{
+$sql="select 종목명,substr(지급기준일,1,4) as 지급기준년,주당분배금,시가대비분배율 from etfvari.divinfo order by 종목명 asc, 지급기준일 desc ";
+}
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);

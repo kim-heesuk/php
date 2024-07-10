@@ -1,12 +1,12 @@
 <?php
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-type: application/json; charset=utf-8");
-include "./conn.php";
-$result=riskinfo($conn);
+//include "./conn.php";
+//$result=riskinfo($conn);
 //print_r($result);
 
 
-/*
+
 $request_method = $_SERVER["REQUEST_METHOD"];
 switch ($request_method) {
     case 'GET':
@@ -37,7 +37,7 @@ switch ($request_method) {
         echo json_encode(["message" => "Method Not Allowed"]);
         break;
 }
-*/
+
 function handlePostRequest($request) {
 	include "./conn.php";
 	if ($request=="divinfo"){
@@ -81,7 +81,11 @@ return $rdata;
 }
 
 function divinfo($conn){
-$sql="select 종목명,substr(지급기준일,1,4) as 지급기준년,주당분배금,시가대비분배율 from etfvari.divinfo order by 종목명 asc, 지급기준일 ";
+if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
+$sql="select name as 종목명,substr(divinfo,1,4) as 지급기준년,divinfo,divperprice from etfvari.divinfo order by name asc, divperprice desc ";
+}else{
+$sql="select 종목명,substr(지급기준일,1,4) as 지급기준년,주당분배금,시가대비분배율 from etfvari.divinfo order by 종목명 asc, 지급기준일 desc ";
+}
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
