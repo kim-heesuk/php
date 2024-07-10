@@ -4,8 +4,8 @@ header("Content-type: application/json; charset=utf-8");
 //include "./conn.php";
 //$result=riskinfo($conn);
 //print_r($result);
-
-
+//$name="ACE 200";
+//divinfodetail($conn,$name);
 
 $request_method = $_SERVER["REQUEST_METHOD"];
 switch ($request_method) {
@@ -19,7 +19,7 @@ switch ($request_method) {
 		$input = json_decode(file_get_contents('php://input'), true);
 		$request=$input['request'];
 		//echo json_encode(["message" => $request]);
-        handlePostRequest($request);
+        handlePostRequest($request,$input);
         break;
     case 'PUT':
         // PUT 요청 처리
@@ -38,15 +38,21 @@ switch ($request_method) {
         break;
 }
 
-function handlePostRequest($request) {
+
+function handlePostRequest($request,$input) {
 	include "./conn.php";
 	if ($request=="divinfo"){
 	$result=divinfo($conn);
+	echo json_encode($result);	
+	}else if($request=="divinfodetail"){
+		$name=$input['name'];
+		$result=divinfodetail($conn,$name);
 	echo json_encode($result);
-	}else if($request=="riskinfo"){
+	}
+	
+	else if($request=="riskinfo"){
 		$result=riskinfo($conn);
 	echo json_encode($result);
-	
 	}
 	
 }
@@ -116,5 +122,23 @@ $result['graph']=$codesviews;
 return $result;
 }
 
-
+function divinfodetail($conn,$name){
+$returnvalue=array();
+if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
+$sql="select distinct divsetday as 지급일,round(divperstock,0) as 분배금 ,divperprice as 시가대비, divclass as 구분, round(curprice,0) as 기준가 from etfvari.divinfo where name= ?";
+$key="name";
+}else{
+$sql="select distinct 지급기준일 as 지급일,round(주당분배금,0) as 분배금,시가대비분배율 as 시가대비,배당구분 as 구분, round(결산과표기준가,0) as 기준가 from etfvari.divinfo where 종목명=? ";
+$key="종목명";
+}
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(1, $name, PDO::PARAM_STR);  // 첫 번째 위치의 자리표시자에 값을 바인딩
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($results as $row) {
+		
+	$returnvalue[]=array_values($row);
+	}
+return $returnvalue;
+}
 ?>

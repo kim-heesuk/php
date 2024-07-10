@@ -29,7 +29,6 @@ include "./sidebar.php";
               <div class="card-header">
                 <h3 class="card-title">분배금(배당금) 지급현황</h3>
               </div>
-              <!-- /.card-header -->
               <div class="card-body">
                 <table id="divtable" class="table table-bordered table-striped">
                   <thead>
@@ -76,17 +75,35 @@ include "./sidebar.php";
               <!-- /.card-body-->
             </div>
             <!-- /.card -->
+			<div class="row">
+			<div class="card">
+			  <div class="card-body">
+                <table id="divtabledetail" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>지급일</th>
+                    <th>분배금</th>
+                    <th>시가대비</th>
+                    <th>구분</th>
+                    <th>기준가</th>
+                  </tr>
+                  </thead>
+				  <tbody>
+				  </tbody>
+				  
+                </table>
+              </div>
+			  
+			  
+			  
+			  
+			  </div>
 			
+			</div>
 		  </section>
 		  
 		</div>
 		
-		 <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-5 connectedSortable">
-		  
-		  </section>
-		</div>
 		
 		
 		
@@ -119,7 +136,7 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
 	
 	 $('#divtable tbody').on('click', 'tr', function () {
 	var data = divtable.row(this).data();
-	  console.log(data[0],result['graph'][data[0]]);
+	  //console.log("====",data[0],result['graph'][data[0]]);
 	  title=data[0];
 	  label=Object.keys(result['graph'][data[0]]);
 	  const datas=[];
@@ -127,6 +144,29 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
 		datas.push(result['graph'][data[0]][key]['div']);
 	  }
 	  bar_draw(ctx,datas,label,title);
+		var divdetail=DivinfoDetail(title);
+		appendDataToTableDetail(divdetail);
+		
+		if ($.fn.DataTable.isDataTable('#divtabledetail')) {
+			divtabledetail.clear();
+			var divtabledetail=$('#divtabledetail').DataTable({
+			  "responsive": true, 
+			  "lengthChange": false, 
+			  "autoWidth": false,
+			  "info": true,
+			  "searching": false,
+			  //"buttons": ["excel"],
+			});
+		
+		} else {
+			$('#divtabledetail').DataTable({
+			});
+		}
+		
+
+		
+		
+		
 	});
 	
 	
@@ -187,6 +227,31 @@ function DivinfoReq(){
 return result;	
 }
 
+
+function DivinfoDetail(title){
+	var result;
+	$.ajax({
+		url: "AjaxHtml/Receiver.php",
+		type: "POST",
+		data: JSON.stringify({ "request": "divinfodetail", "name": title}),
+		contentType: "application/json; charset=utf-8",
+		async: false, // 동기식 호출
+		success: function(redata){
+			result=redata;
+			console.log(result);
+			
+		},
+		error: function(xhr, status, error){
+		console.log(status,error);
+			$("#result").html("An error occurred: " + error);
+		},
+		complete : function(xhr, status) {
+		
+		},
+	});
+return result;	
+}
+
 function appendDataToTable(data) {
 	console.log("Received data:", data);
 	var divtable = $('#divtable tbody');
@@ -197,6 +262,23 @@ function appendDataToTable(data) {
 			'<td>' + row[2].toLocaleString() + '</td>' +
 			'<td>' + row[3] + '</td>' +
 			'<td>' + row[4] + '</td>' +
+			'</tr>';
+		divtable.append(newRow);
+	});
+}
+
+
+function appendDataToTableDetail(data) {
+	console.log("Received data:", data);
+	var divtable = $('#divtabledetail tbody');
+	divtable.empty();
+	data.forEach(function(row) {
+		var newRow = '<tr>' +
+			'<td>' + row[0].toLocaleString() + '</td>' +
+			'<td>' + row[1] + '</td>' +
+			'<td>' + row[2] +'</td>' +
+			'<td>' + row[3] + '</td>' +
+			'<td>' + row[4].toLocaleString() + '</td>' +
 			'</tr>';
 		divtable.append(newRow);
 	});
