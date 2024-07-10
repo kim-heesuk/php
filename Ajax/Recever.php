@@ -106,9 +106,10 @@ foreach ($data as $key => $value) {
 	try {
 		$stmt->execute();
 		$result["message"]= "OK";
-		$result["sql"]= $sql;
+		
 	} catch (PDOException $e) {
-		$result["message"]= "NOK";
+		$result["message"]= $e;
+		$result["sql"]= $sql;
 	}
 
 	
