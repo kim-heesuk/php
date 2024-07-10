@@ -87,10 +87,10 @@ $keys=array_keys($data);
 $sql="insert into etfvari.".$data['table']."(";
 $colstr="";
 $valstr="";
-for ($i=0; $i < count($keys)-1; $i++){
+for ($i=0; $i < count($keys); $i++){
 	if ($keys[$i]!="table") {
     $colstr .=$keys[$i].",";
-    $valstr .=" :".$keys[$i].",";
+    $valstr .= ":" . $keys[$i] . ",";
     }
 }
 $colstr=rtrim($colstr,",").") values(";
