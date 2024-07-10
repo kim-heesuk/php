@@ -90,12 +90,12 @@ $valstr="";
 for ($i=0; $i < count($keys)-1; $i++){
 	if ($keys[$i]!="table") {
     $colstr .=$keys[$i].",";
-    $valstr .=" :".$data[$keys[$i]].",";
+    $valstr .=" :".$keys[$i].",";
     }
 }
-$colstr=$sql. rtrim($colstr,",").") values(";
-$valstr=rtrim($valstr,",").")";
-$sql=$colstr.$valstr;
+$colstr=rtrim($colstr,",").") values(";
+$valstr = rtrim($valstr, ",") . ")";
+$sql=$sql.$colstr.$valstr;
 
 $stmt = $conn->prepare($sql);
 foreach ($data as $key => $value) {
@@ -108,7 +108,7 @@ foreach ($data as $key => $value) {
 		$result["message"]= "OK";
 		
 	} catch (PDOException $e) {
-		$result["message"]= $e;
+		$result["message"]= $e->getMessage();
 		$result["sql"]= $sql;
 	}
 
