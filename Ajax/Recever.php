@@ -61,7 +61,7 @@ function handlePostRequest() {
 			$result=Revcodename($input,$conn);
 			echo json_encode($result);
 
-        }else if($tablename=="trenline"){
+        }else if($tablename=="trendline"){
 			$result=Revcodename($input,$conn);
 			echo json_encode($result);
 
@@ -96,7 +96,6 @@ for ($i=0; $i < count($keys); $i++){
 $colstr=rtrim($colstr,",").") values(";
 $valstr = rtrim($valstr, ",") . ")";
 $sql=$sql.$colstr.$valstr;
-
 $stmt = $conn->prepare($sql);
 foreach ($data as $key => $value) {
 	if ($key!="table"){
