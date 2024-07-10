@@ -1,5 +1,4 @@
 <?php
-
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-type: application/json; charset=utf-8");
 $request_method = $_SERVER["REQUEST_METHOD"];
@@ -107,6 +106,7 @@ foreach ($data as $key => $value) {
 	try {
 		$stmt->execute();
 		$result["message"]= "OK";
+		$result["sql"]= $sql;
 	} catch (PDOException $e) {
 		$result["message"]= "NOK";
 	}
