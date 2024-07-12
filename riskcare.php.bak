@@ -38,19 +38,22 @@ include "./sidebar.php";
 				  <thead>
                   <tr>
 					
-                    <th rowspan=2>종목명</th>
+                    <th rowspan=2>종 목 명</th>
+					<th colspan=2>승  률</th>
                     <th colspan=2>평균수익</th>
-					<th colspan=2>년중최대</br>손익</th>
-					<th colspan=2>월중최대</br>손익</th>
+					<th colspan=2> 년 중 </br>최대손익</th>
+					<th colspan=2> 월 중 </br>최대손익</th>
 					<th colspan=2>년초년말</br>최대손익</th>
 					<th colspan=2>월초월말</br>최대손익</th>
 					<th colspan=2>년연속</br>손익횟수</th>
 					<th colspan=2>월연속</br>손익횟수</th>
-					<th colspan=2>년누적</br>손익횟수</th>
-					<th colspan=2>월누적</br>손익횟수</th>
+					<!-- <th colspan=2>년누적</br>손익횟수</th>
+					<th colspan=2>월누적</br>손익횟수</th> !-->
                   </tr>
 				  
 				  <tr>
+				  <th>년 </th>
+				  <th>월</th>
 				  <th>년 </th>
 				  <th>월</th>
 				  <th><font color='gray'>익</font></th>
@@ -65,10 +68,13 @@ include "./sidebar.php";
                   <th><font color='gray'>손</font></th>
 				  <th>익</th>
 				  <th>손</th>
+				  
+				  <!--
 				  <th><font color='gray'>익</font></th>
                   <th><font color='gray'>손</font></th>
+				  
 				  <th>익</th>
-                  <th>손</th>
+                  <th>손</th> !-->
 				  
 				  
 				  </tr>
@@ -171,13 +177,28 @@ function appendDataToTable(data) {
 		
 		var newRow = '<tr>' +
 			'<td>' + row[0] + '</td>' ;
-			for (var i=1; i < 19; i++){
+			for (var i=1; i < 3; i++){
+				if (row[i]==null){
+					newRow +='<td> </td>';
+					}
+				else if (row[i] < 51){
+				newRow +='<td> <font color="blue">'+row[i]+'</td>';
+				}else{
+				newRow +='<td> <font color="red">'+row[i]+'</td>';
+				}
+			
+			}
+			for (var i=3; i < 11; i++){
 			 if (row[i] < 0){
 			 newRow +='<td> <font color="blue">'+row[i]+'</td>';
 			 }else{
 			 newRow +='<td> <font color="red">'+row[i]+'</td>';
 			 }
-			}						
+			}
+			for (var i=11; i < 17; i++){
+			newRow +='<td>'+row[i]+'</td>';
+			}
+			
 			newRow +='</tr>';
 		risktable.append(newRow);
 	});

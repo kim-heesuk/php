@@ -69,8 +69,8 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-$sql="select code,ymean,mmean,ymax,ymin,mmax,mmin,ystartmaxup,ystartmaxdown,mstartmaxup ";
-$sql .=" mstartmaxup,mstartmaxdown,yconup,ycondown,mconup,mcondown,ymaxc,yminc,mmaxc, mminc from etfvari.riskcare";
+$sql="select code, (ymaxc/(ymaxc+yminc) *100) as yvratio, (mmaxc/(mmaxc+mminc) *100) as mvratio, ymean,mmean,ymax,ymin,mmax,mmin,ystartmaxup,ystartmaxdown, ";
+$sql .=" mstartmaxup,mstartmaxdown,yconup,ycondown,mconup,mcondown from etfvari.riskcare";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $rdata=array();
@@ -90,7 +90,7 @@ function divinfo($conn){
 if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
 $sql="select name as 종목명,substr(divsetday,1,4) as 지급기준년,divperstock as 주당분배금 ,divperprice as 시가대비분배율 from etfvari.divinfo order by name asc, divperprice desc ";
 }else{
-$sql="select 종목명,substr(지급기준일,1,4) as 지급기준년,주당분배금,시가대비분배율 from etfvari.divinfo order by 종목명 asc, 지급기준일 desc ";
+$sql="select 종목명,substr(지급기준일,1,4) as 지급기준년,주당분배금,시가대비분배율 from etfvari.divinfo where 배당구분!='청산분배' && substr(지급기준일,1,4) > '2022' order by 종목명 asc, 지급기준일 desc ";
 }
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -125,10 +125,10 @@ return $result;
 function divinfodetail($conn,$name){
 $returnvalue=array();
 if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
-$sql="select distinct divsetday as 지급일,round(divperstock,0) as 분배금 ,divperprice as 시가대비, divclass as 구분, round(curprice,0) as 기준가 from etfvari.divinfo where name= ? ";
+$sql="select distinct divsetday as 지급일,round(divperstock,0) as 분배금 ,divperprice as 시가대비, divclass as 구분, round(curprice,0) as 기준가 from etfvari.divinfo where name= ? order by divsetday desc";
 $key="name";
 }else{
-$sql="select distinct 지급기준일 as 지급일,round(주당분배금,0) as 분배금,시가대비분배율 as 시가대비,배당구분 as 구분, round(결산과표기준가,0) as 기준가 from etfvari.divinfo where 종목명=? order by 지급기준일 desc";
+$sql="select distinct 지급기준일 as 지급일,round(주당분배금,0) as 분배금, 시가대비분배율 as 시가대비,배당구분 as 구분, round(결산과표기준가,0) as 기준가 from etfvari.divinfo where 종목명=? order by 지급기준일 desc";
 $key="종목명";
 }
 $stmt = $conn->prepare($sql);
@@ -136,7 +136,9 @@ $stmt->bindParam(1, $name, PDO::PARAM_STR);  // 첫 번째 위치의 자리표�
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($results as $row) {
-		
+		if (trim($row['시가대비'])=="null" or (int)$row['시가대비'] < 0){
+		$row['시가대비'] = round($row['분배금']/$row['기준가'] *100,2);
+		}
 	$returnvalue[]=array_values($row);
 	}
 return $returnvalue;
