@@ -19,6 +19,14 @@ echo '
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
+	  
+			<li class="nav-item d-none d-sm-inline-block">
+            
+                <div class="inner" id="visitorCount">Loading...</div>
+            
+			</li>
+	  
+	  
     </ul>
 
     <!-- Right navbar links -->
@@ -159,6 +167,21 @@ echo '
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-  </aside>';
+  </aside>
+  
+  <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("./Ajax/Counter.php")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("visitorCount").innerText = data.count;
+                })
+                .catch(error => console.error("Error fetching visitor count:", error));
+        });
+    </script>
+	
+  
+  
+  ';
 ?>  
   
