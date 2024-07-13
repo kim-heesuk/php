@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params(10); // 1 hour
+session_set_cookie_params(3600 *24); // 24 hour
 session_start(); // 세션 시작
 include "./head.php";
 include "./sidebar.php";
@@ -7,8 +7,6 @@ $visit_date = date('Y-m-d');
 if (count($_SESSION)==0){
 $_SESSION['first_visit']=0;
 }
-print_r($_SESSION);
-
 ?>
 
 <!-----------======================

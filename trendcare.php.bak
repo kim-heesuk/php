@@ -39,7 +39,6 @@ include "./sidebar.php";
                   <tr>
                     <th rowspan=2>종 목 명</th>
 					<th colspan=11>등락율 (%)</th>
-                    <!-- <th colspan=12>종가현황</th> !-->
                   </tr>
 				  
 				  <tr>
@@ -55,23 +54,6 @@ include "./sidebar.php";
 				  <th>5년</th>				  
 				  <th>년평</th>
 				  <th>상장</th>
-				  <!--
-				  <th>종가</th>
-				  <th>1달</th>
-				  <th>분기 </th>
-				  <th>반기</th>
-                  <th>년초</th>
-                  <th>1년</th>
-				  <th>2년</th>
-				  <th>3년</th>
-				  <th>4년</th>
-				  <th>5년</th>				  
-				  !-->
-				  
-				  
-				  
-				  
-				  
 				  
 				  </tr>
                   </thead>
@@ -233,9 +215,11 @@ function appendDataToTable2(data) {
 					else if (row[i+1]!=null && row[i+1] > row[i]){
 					newRow2 +='<td> <font color="blue">'+row[i].toLocaleString() +'</td>';
 					}
-					else if (row[i] < 0){
-						newRow2 +='<td>'+row[i]+'</td>';
-					}else{
+					else if (row[i+1]==null){
+					newRow2 +='<td>'+row[i].toLocaleString() +'</td>';
+					}
+					
+					else{
 						newRow2 +='<td> <font color="red">'+row[i].toLocaleString() +'</td>';
 					}
 			

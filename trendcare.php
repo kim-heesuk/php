@@ -10,13 +10,7 @@ include "./sidebar.php";
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.flash.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
-	
-  
-  <!-----------======================
-    <!-- Content Wrapper. Contains page content -->
-	    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"> !-->
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> !-->
-    <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> !-->
+
 	
 <div class="content-wrapper">
     <!-- Main content -->
@@ -39,7 +33,6 @@ include "./sidebar.php";
                   <tr>
                     <th rowspan=2>종 목 명</th>
 					<th colspan=11>등락율 (%)</th>
-                    <!-- <th colspan=12>종가현황</th> !-->
                   </tr>
 				  
 				  <tr>
@@ -55,23 +48,6 @@ include "./sidebar.php";
 				  <th>5년</th>				  
 				  <th>년평</th>
 				  <th>상장</th>
-				  <!--
-				  <th>종가</th>
-				  <th>1달</th>
-				  <th>분기 </th>
-				  <th>반기</th>
-                  <th>년초</th>
-                  <th>1년</th>
-				  <th>2년</th>
-				  <th>3년</th>
-				  <th>4년</th>
-				  <th>5년</th>				  
-				  !-->
-				  
-				  
-				  
-				  
-				  
 				  
 				  </tr>
                   </thead>

@@ -74,39 +74,20 @@ function handlePostRequest() {
 	
 }
 
-
-
-
 function Revcodename($data,$conn){
 $result=array();
 $keys=array_keys($data);
-$sql="insert into etfvari.".$data['table']."(";
-$colstr="";
-$valstr="";
-for ($i=0; $i < count($keys); $i++){
-	if ($keys[$i]!="table") {
-    $colstr .=$keys[$i].",";
-    $valstr .= ":" . $keys[$i] . ",";
-    }
-}
-$colstr=rtrim($colstr,",").") values(";
-$valstr = rtrim($valstr, ",") . ")";
-$sql=$sql.$colstr.$valstr;
+$sql="delete from  etfvari.".$data['table'];
 $stmt = $conn->prepare($sql);
-foreach ($data as $key => $value) {
-	if ($key!="table"){
-		$stmt->bindValue(':' . $key, $value);
-	}
+try {
+	$stmt->execute();
+	$result["message"]= "OK";
+	$result["sql"]= $sql;
+	
+} catch (PDOException $e) {
+	$result["message"]= $e->getMessage();
+	$result["sql"]= $sql;
 }
-	try {
-		$stmt->execute();
-		$result["message"]= "OK";
-		$result["sql"]= $sql;
-		
-	} catch (PDOException $e) {
-		$result["message"]= $e->getMessage();
-		$result["sql"]= $sql;
-	}
 
 	
 return $result;
