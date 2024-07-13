@@ -113,19 +113,31 @@ $('[data-widget="pushmenu"]').PushMenu('collapse');
 	
 	
 	
-	 $('#risktable').DataTable({
+	 var table =$('#risktable').DataTable({
             dom: 'Bfrtip',
             buttons: ['excel']
         });
-	/*
-	$('#risktable tbody td:nth-child(2)').each(function() {
-                if (parseInt($(this).text()) < 0) {
-                    $(this).addClass('negative-value');
-                }
-            });
-	*/
 	
 
+
+
+	
+	$('#risktable tbody').on('click', 'tr', function() {
+	var rowData = table.row(this).data();
+	var textData = [];
+
+	$(this).find('td').each(function() {
+		textData.push($(this).text());
+	});
+	
+	
+	var jsonData = JSON.stringify(textData);
+
+	var popup = window.open('spider.php', '_blank', 'width=850,height=400');
+	popup.onload = function() {
+		popup.postMessage(jsonData, '*');
+	};
+	 });
 
 
 
