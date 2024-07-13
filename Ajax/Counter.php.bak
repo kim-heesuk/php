@@ -4,7 +4,6 @@ header("Content-type: application/json; charset=utf-8");
 // 클라이언트 IP 주소와 현재 날짜 가져오기
 if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
 $ip_address = $_SERVER['REMOTE_ADDR'];
-$ip_address = "10.10.10.10";
 $visit_date = date('Y-m-d');
 include "./conn.php";
 $sql = "SELECT ip_address,visit_date FROM visit.visits WHERE ip_address = :ip_address AND visit_date = :visit_date";
