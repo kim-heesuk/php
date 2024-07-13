@@ -1,21 +1,11 @@
 <?php
+session_set_cookie_params(3600); // 1 hour
+session_start(); // 세션 시작
 include "./head.php";
 include "./sidebar.php";
 $visit_date = date('Y-m-d');
-$cookie_name = "visited";
-$cookie_value = "yes";
-$cookie_expiration = time() + (3600); // 하루 동안 쿠키 유지
-// 쿠키가 설정되지 않은 경우 처음 방문자로 간주
-if (!isset($_COOKIE[$cookie_name])) {
-    setcookie($cookie_name, $cookie_value, $cookie_expiration, "/"); // 쿠키 설정
-    $is_first_visit = true;
-} else {
-    $is_first_visit = false;
-}
-echo $is_first_visit ."</br>";
-
+$_SESSION['first_visit']=0;
 ?>
-<!-- /.navbar -->
 
 <!-----------======================
 <!-- Content Wrapper. Contains page content -->
@@ -156,22 +146,20 @@ echo $is_first_visit ."</br>";
 				
 <?php
 include "./footer.php";
+if ($_SESSION['first_visit']==0){
+$_SESSION['first_visit']=1;
+}
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
 $(document).ready(function(e){
-var is_first_visit = <?php echo json_encode($is_first_visit); ?>;
-//if (is_first_visit){
-//$('#modal-primary').modal('show');
-//}
+is_first_visit = <?php echo json_encode($_SESSION); ?>;
+if (is_first_visit['first_visit']==0){
+$('#modal-primary').modal('show');
+}
 let myChart; // 전역 변수로 차트 객체를 저장
 $('[data-widget="pushmenu"]').PushMenu('collapse');
-
-
-
-
-
 	 var result=DivinfoReq();
 	 appendDataToTable(result['line']);
      var divtable=$('#divtable').DataTable({
@@ -230,36 +218,7 @@ $('#divtable tbody').on('click', 'tr', function () {
 		
 	});
 	
-	
-  
 
-
-
-  
-	
-	
-/*
-  document.addEventListener("DOMContentLoaded", function() {
-    <?php if ($is_first_visit): ?>
-    var modal = document.getElementById("#modal-primary");
-    var span = document.getElementsByClassName("close")[0];
-
-    // Show the modal
-    modal.style.display = "block";
-
-    // Close the modal when the user clicks on <span> (x)
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // Close the modal when the user clicks anywhere outside of the modal
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-    <?php endif; ?>
-	*/
 });
   
  
@@ -428,6 +387,8 @@ function appendDataToTableDetail(data) {
 		
 
 </script>
+<?
 
+?>
 </body>
 </html>

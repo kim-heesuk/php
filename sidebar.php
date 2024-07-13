@@ -169,13 +169,11 @@ echo '
             fetch("./Ajax/Counter.php")
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById("visitorCount").innerText = data.count;
+                    document.getElementById("visitorCount").innerText = "방문자수 : " + data.count;
                 })
                 .catch(error => console.error("Error fetching visitor count:", error));
         });
     </script>
-	
-  
   
   ';
 ?>  

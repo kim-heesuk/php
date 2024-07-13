@@ -68,4 +68,7 @@ echo '
 <!-- <script src="plugins/flot/plugins/jquery.flot.pie.js"></script>	
 </head>';
 ?>
+<script>
+var is_first_visit;
+</script>
 

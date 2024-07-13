@@ -1,6 +1,5 @@
 <?php
-echo '
-<!DOCTYPE html>
+echo '<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
