@@ -55,6 +55,43 @@ function handlePostRequest($request,$input) {
 	echo json_encode($result);
 	}
 	
+	else if($request=="trendinfo"){
+		$result=trendinfo($conn);
+	echo json_encode($result);
+	}
+	
+	
+}
+
+function trendinfo($conn){
+$codename=array();	
+$sql="select code,name from etfvari.codename";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($results as $row) {
+	$codename[$row['code']]=$row['name'];
+	}
+	
+
+
+$sql="select code,week,open1month,open3month,open6month,nowyear,open1year, ";
+$sql .=" open2year,open3year,open4year,open5year,openavg,tot,close,open1monthv,";
+$sql .="open3monthv,open6monthv,nowyearv,open1yearv,open2yearv,open3yearv,open4yearv,";
+$sql .="open5yearv from etfvari.trendline ";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$rdata=array();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($results as $row) {
+		if(array_key_exists($row['code'],$codename)){
+			$row['code']=$codename[$row['code']];
+			$av=array_values($row);
+			$rdata[]=$av;
+		}
+	
+	}
+return $rdata;
 }
 
 function riskinfo($conn){
@@ -139,7 +176,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$returnvalue[]=array_values($row);
 	}
 //return $returnvalue;
-return $name;
+return $returnvalue;
 }
 
 function escapeHTML($data) {

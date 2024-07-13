@@ -3,10 +3,6 @@ include "./head.php";
 include "./sidebar.php";
 ?>
 
-	
-
-
-
   
   <!-----------======================
     <!-- Content Wrapper. Contains page content -->
@@ -111,7 +107,7 @@ include "./footer.php";
 
 <script>
 $(document).ready(function(e){ 
-$('[data-widget="pushmenu"]').PushMenu('toggle');
+$('[data-widget="pushmenu"]').PushMenu('collapse');
 	var result=RiskinfoReq();
 	appendDataToTable(result)
 	
@@ -121,12 +117,18 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
             dom: 'Bfrtip',
             buttons: ['excel']
         });
-	
+	/*
 	$('#risktable tbody td:nth-child(2)').each(function() {
                 if (parseInt($(this).text()) < 0) {
                     $(this).addClass('negative-value');
                 }
             });
+	*/
+	
+
+
+
+
 });
 
 

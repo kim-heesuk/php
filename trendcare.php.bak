@@ -233,11 +233,9 @@ function appendDataToTable2(data) {
 					else if (row[i+1]!=null && row[i+1] > row[i]){
 					newRow2 +='<td> <font color="blue">'+row[i].toLocaleString() +'</td>';
 					}
-					else if (row[i+1]==null){
-					newRow2 +='<td>'+row[i].toLocaleString() +'</td>';
-					}
-					
-					else{
+					else if (row[i] < 0){
+						newRow2 +='<td>'+row[i]+'</td>';
+					}else{
 						newRow2 +='<td> <font color="red">'+row[i].toLocaleString() +'</td>';
 					}
 			

@@ -117,12 +117,18 @@ $('[data-widget="pushmenu"]').PushMenu('collapse');
             dom: 'Bfrtip',
             buttons: ['excel']
         });
-	
+	/*
 	$('#risktable tbody td:nth-child(2)').each(function() {
                 if (parseInt($(this).text()) < 0) {
                     $(this).addClass('negative-value');
                 }
             });
+	*/
+	
+
+
+
+
 });
 
 
@@ -149,7 +155,6 @@ return result;
 }
 
 function appendDataToTable(data) {
-	console.log("Received data:", data);
 	var risktable = $('#risktable tbody');
 	data.forEach(function(row) {
 		if (typeof row[11]==="object"){
