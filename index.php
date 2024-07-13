@@ -121,8 +121,12 @@ background-color: rgba(0,0,0,0.4); /* Black with opacity */
                 </div>
               </div>
               <div class="card-body">
+			  <div id="chartContainer">
+					<canvas id="myChart" style="height: 300px;"></canvas>
+				</div>
+	
                 <!-- <div id="bar-chart" style="height: 300px;"></div> !-->
-				<canvas id="myChart" style="height: 300px;"></canvas>
+				 <!-- <canvas id="myChart" style="height: 300px;"></canvas> !-->
               </div>
               <!-- /.card-body-->
             </div>
@@ -178,9 +182,11 @@ background-color: rgba(0,0,0,0.4); /* Black with opacity */
 <?php
 include "./footer.php";
 ?>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+
 $(document).ready(function(e){ 
+let myChart; // 전역 변수로 차트 객체를 저장
 $('[data-widget="pushmenu"]').PushMenu('toggle');
 	 var result=DivinfoReq();
 	 appendDataToTable(result['line']);
@@ -191,17 +197,32 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
 	  "info": true,
       "buttons": ["excel"],
     });
-	const ctx = document.getElementById('myChart');
+	
+	
 	 $('#divtable tbody').on('click', 'tr', function () {
 	var data = divtable.row(this).data();
-	  title=data[0];
-	  label=Object.keys(result['graph'][data[0]]);
-	  const datas=[];
-	  for (const key in result['graph'][data[0]]) {
-		datas.push(result['graph'][data[0]][key]['div']);
+	  var title=data[0];
+	  var Htitle=JSHTMLescape(data[0]);
+	  if ('graph' in result){
+	  labels=Object.keys(result['graph'][Htitle]);
 	  }
-	  bar_draw(ctx,datas,label,title);
-		var divdetail=DivinfoDetail(title);
+	  const barData=[];
+	  const lineData=[];
+	  const barTitle="분배금";
+	  const lineTitle="분배율";
+	  
+	  
+	  
+	  if ('graph' in result){
+	  for (const key in result['graph'][Htitle]) {
+		barData.push(result['graph'][Htitle][key]['div']);
+		lineData.push(result['graph'][Htitle][key]['rate']);
+	  }
+	  // 차트그리기 
+	  bar_line_draw(barData, lineData, labels, barTitle, lineTitle);
+	  }
+		
+		var divdetail=DivinfoDetail(Htitle);
 		appendDataToTableDetail(divdetail);
 		
 		if ($.fn.DataTable.isDataTable('#divtabledetail')) {
@@ -220,24 +241,19 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
 			});
 		}
 		
-
-		
-		
-		
 	});
 	
 	
   
 
 /*
-  var modal = document.getElementById("myModal");
-    var span = document.getElementsByClassName("close")[0];
-
-    // Show the modal
-    modal.style.display = "block";
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+// Show the modal
+modal.style.display = "block";
   */
 	
-	//bar_draw();
+	
   
   document.addEventListener("DOMContentLoaded", function() {
     <?php if ($is_first_visit): ?>
@@ -265,28 +281,81 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
   
 });
 
+function JSHTMLescape(str) {
+	if (!str) return '';
+	return str
+		.replace('&amp;',"&")
+		.replace( '&lt;',"<")
+		.replace('&gt;',">")
+		.replace('&quot;','"')
+		.replace('&#039;',"'");
+}
 
+function bar_line_draw(barData, lineData, labels, barTitle, lineTitle) {
+          const chartContainer = document.getElementById('chartContainer');
+          const oldCanvas = document.getElementById('myChart');
 
-function bar_draw(ctx,datas,label,title){
- new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: label,
-      datasets: [{
-        label: title,
-        data: datas,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+          // 기존 canvas 요소를 삭제
+          if (oldCanvas) {
+            chartContainer.removeChild(oldCanvas);
+          }
+
+          // 새로운 canvas 요소를 생성하고 추가
+          const newCanvas = document.createElement('canvas');
+          newCanvas.id = 'myChart';
+          newCanvas.style.height = '300px';
+          chartContainer.appendChild(newCanvas);
+
+          const ctx = newCanvas.getContext('2d');
+
+          // 새로운 혼합 차트를 생성
+          myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  type: 'bar',
+                  label: barTitle,
+                  data: barData,
+                  yAxisID: 'y',
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+                },
+                {
+                  type: 'line',
+                  label: lineTitle,
+                  data: lineData,
+                  yAxisID: 'y1',
+                  backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                  borderColor: 'rgba(153, 102, 255, 1)',
+                  borderWidth: 1,
+                  fill: false
+                }
+              ]
+            },
+            options: {
+              scales: {
+                y: {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  beginAtZero: true
+                },
+                y1: {
+                  type: 'linear',
+                  display: true,
+                  position: 'right',
+                  beginAtZero: true,
+                  grid: {
+                    drawOnChartArea: false // 오른쪽 y축의 그리드 라인을 그리지 않음
+                  }
+                }
+              }
+            }
+          });
         }
-      }
-    }
-  });
-}	
 
 
 function DivinfoReq(){

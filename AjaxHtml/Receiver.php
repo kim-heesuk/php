@@ -66,9 +66,6 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($results as $row) {
 	$codename[$row['code']]=$row['name'];
 	}
-
-
-
 $sql="select code, round((ymaxc/(ymaxc+yminc) *100),2) as yvratio, round((mmaxc/(mmaxc+mminc) *100),2) as mvratio, ymean,mmean,ymax,ymin,mmax,mmin,ystartmaxup,ystartmaxdown, ";
 $sql .=" mstartmaxup,mstartmaxdown,yconup,ycondown,mconup,mcondown from etfvari.riskcare";
 $stmt = $conn->prepare($sql);
@@ -141,6 +138,21 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		}
 	$returnvalue[]=array_values($row);
 	}
+//return $returnvalue;
 return $returnvalue;
+}
+
+function escapeHTML($data) {
+    return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+}
+function processPostData($postData) {
+    $escapedData = [];
+
+    // POST 데이터의 각 값을 이스케이프 처리
+    foreach ($postData as $key => $value) {
+        $escapedData[$key] = escapeHTML($value);
+    }
+
+    return $escapedData;
 }
 ?>
