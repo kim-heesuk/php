@@ -40,7 +40,7 @@ include "./sidebar.php";
 					
                     <th rowspan=2>종 목 명</th>
 					<th colspan=2>승  률</th>
-                    <th colspan=2>평균수익</th>
+                    <th colspan=2>평균</br>수익율</th>
 					<th colspan=2>&nbsp;  년 중&nbsp;  </br>최대손익</th>
 					<th colspan=2>&nbsp;  월 중&nbsp;  </br>최대손익</th>
 					<th colspan=2>년초년말</br>최대손익</th>

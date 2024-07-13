@@ -15,56 +15,35 @@ if (!isset($_COOKIE[$cookie_name])) {
 echo $is_first_visit ."</br>";
 
 ?>
+<!-- /.navbar -->
 
-<style>
-.modal {
-display: none; /* Hidden by default */
-position: fixed; /* Stay in place */
-z-index: 1; /* Sit on top */
-left: 0;
-top: 0;
-width: 100%; /* Full width */
-height: 100%; /* Full height */
-overflow: auto; /* Enable scroll if needed */
-background-color: rgba(0,0,0,0.4); /* Black with opacity */
-}
+<!-----------======================
+<!-- Content Wrapper. Contains page content -->
 
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 60%; /* Could be more or less, depending on screen size */
-    position: relative; /* Make position relative for absolute positioning of close button */
-}
-
-/* Close Button */
-.close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-}
-    </style>
-
-  <!-- /.navbar -->
-
-
-  
-  <!-----------======================
-    <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-
+ <div class="modal fade" id="modal-primary">
+        <div class="modal-dialog">
+          <div class="modal-content bg-primary">
+            <div class="modal-header">
+              <!-- <h4 class="modal-title">공지사항</h4> !-->
+			  <h4 class="modal-title text-center">공지사항</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+			<p> cloudtype의 프리티어 등급으로 관리 중 <font color='red'> (매일1회 중지됨)</font></p>
+			<p> 고정URL : <font color='red'> https://sites.google.com/view/etftrader </font> </p>
+			<p> 운영목적 : 국내 상장된 ETF 분석을 통해 누구나 안정적인 투자를</p>
+			<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이어가길 바라는 마음에서 싸이트을 운영합니다.</p>
+			<p> 문의사항 : 상단 <font color='red'>질문</font>를 누르고 문의하세요 </p>
+            </div>
+			
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 
     <!-- Main content -->
     <section class="content">
@@ -167,27 +146,30 @@ background-color: rgba(0,0,0,0.4); /* Black with opacity */
 		</div>
 		</section>
 
+
+
+
+
+
+
 </div>
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p> 본 주소는 cloudtype 의 프리티어 등급으로 관리 중으로 매일1회 중지 됩니다 </p>
-		<p> https://sites.google.com/view/etftrader 주소를 통해서 입장을 권고하며,</p>
-		<p> 운영목적 : 국내 상장된 ETF 분석을 통해 누구나 안정적인 투자를 이어가길 바라는 마음에서 싸이트을 운영합니다.</p>
-		<p> 문의 : Contact를 누르고 문의하세요 </p>
-    </div>
-</div>
-<!-- Content Wrapper. Contains page content -->
-  
+				
 <?php
 include "./footer.php";
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
-$(document).ready(function(e){ 
+$(document).ready(function(e){
+<?php if ($is_first_visit): ?>	
+$('#modal-primary').modal('show');
 let myChart; // 전역 변수로 차트 객체를 저장
-$('[data-widget="pushmenu"]').PushMenu('toggle');
+$('[data-widget="pushmenu"]').PushMenu('collapse');
+
+
+
+
+
 	 var result=DivinfoReq();
 	 appendDataToTable(result['line']);
      var divtable=$('#divtable').DataTable({
@@ -199,7 +181,9 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
     });
 	
 	
-	 $('#divtable tbody').on('click', 'tr', function () {
+	
+	
+$('#divtable tbody').on('click', 'tr', function () {
 	var data = divtable.row(this).data();
 	  var title=data[0];
 	  var Htitle=JSHTMLescape(data[0]);
@@ -221,10 +205,9 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
 	  // 차트그리기 
 	  bar_line_draw(barData, lineData, labels, barTitle, lineTitle);
 	  }
-		
+	
+	
 		var divdetail=DivinfoDetail(Htitle);
-		console.log(divdetail);
-		
 		appendDataToTableDetail(divdetail);
 		
 		if ($.fn.DataTable.isDataTable('#divtabledetail')) {
@@ -248,18 +231,15 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
 	
   
 
-/*
-var modal = document.getElementById("myModal");
-var span = document.getElementsByClassName("close")[0];
-// Show the modal
-modal.style.display = "block";
-  */
-	
-	
+
+
   
+	
+	
+/*
   document.addEventListener("DOMContentLoaded", function() {
     <?php if ($is_first_visit): ?>
-    var modal = document.getElementById("myModal");
+    var modal = document.getElementById("#modal-primary");
     var span = document.getElementsByClassName("close")[0];
 
     // Show the modal
@@ -277,12 +257,15 @@ modal.style.display = "block";
         }
     }
     <?php endif; ?>
+	*/
 });
   
-  
+ 
   
 });
 
+
+	
 function JSHTMLescape(str) {
 	if (!str) return '';
 	return str

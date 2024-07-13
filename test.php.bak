@@ -1,103 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chart.js Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <div id="chartContainer">
-        <canvas id="myChart" style="height: 300px;"></canvas>
-    </div>
-    <script>
-        let myChart; // 전역 변수로 차트 객체를 저장
-
-        function bar_line_draw(barData, lineData, labels, barTitle, lineTitle) {
-          const chartContainer = document.getElementById('chartContainer');
-          const oldCanvas = document.getElementById('myChart');
-
-          // 기존 canvas 요소를 삭제
-          if (oldCanvas) {
-            chartContainer.removeChild(oldCanvas);
-          }
-
-          // 새로운 canvas 요소를 생성하고 추가
-          const newCanvas = document.createElement('canvas');
-          newCanvas.id = 'myChart';
-          newCanvas.style.height = '300px';
-          chartContainer.appendChild(newCanvas);
-
-          const ctx = newCanvas.getContext('2d');
-
-          // 새로운 혼합 차트를 생성
-          myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: labels,
-              datasets: [
-                {
-                  type: 'bar',
-                  label: barTitle,
-                  data: barData,
-                  yAxisID: 'y',
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-                },
-                {
-                  type: 'line',
-                  label: lineTitle,
-                  data: lineData,
-                  yAxisID: 'y1',
-                  backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                  borderColor: 'rgba(153, 102, 255, 1)',
-                  borderWidth: 1,
-                  fill: false
-                }
-              ]
-            },
-            options: {
-              scales: {
-                y: {
-                  type: 'linear',
-                  display: true,
-                  position: 'left',
-                  beginAtZero: true
-                },
-                y1: {
-                  type: 'linear',
-                  display: true,
-                  position: 'right',
-                  beginAtZero: true,
-                  grid: {
-                    drawOnChartArea: false // 오른쪽 y축의 그리드 라인을 그리지 않음
-                  }
-                }
-              }
-            }
-          });
-        }
-
-        // 초기 차트를 그림
-        bar_line_draw(
-          [12, 19, 3, 5, 2, 3], // bar data
-          [2, 3, 20, 5, 1, 4], // line data
-          ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'], // labels
-          'Bar Dataset', // bar title
-          'Line Dataset' // line title
-        );
-
-        // 2초 후에 새로운 데이터로 차트를 업데이트
-        setTimeout(() => {
-          bar_line_draw(
-            [10, 15, 25, 30, 45, 60], // 새로운 bar data
-            [5, 10, 15, 20, 25, 30], // 새로운 line data
-            ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], // 새로운 labels
-            'Updated Bar Dataset', // 새로운 bar title
-            'Updated Line Dataset' // 새로운 line title
-          );
-        }, 2000);
-    </script>
-</body>
-</html>
+<?php
+include "./head.php";
+include "./sidebar.php";
+?>
+<div class="content-wrapper">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+                  Launch Primary Modal
+                </button>
+ <div class="modal fade" id="modal-primary">
+        <div class="modal-dialog">
+          <div class="modal-content bg-primary">
+            <div class="modal-header">
+              <h4 class="modal-title">Primary Modal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>dfsafsdfdsfadfa&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-outline-light">Save changes</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+  
+  </div>

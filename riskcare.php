@@ -3,10 +3,6 @@ include "./head.php";
 include "./sidebar.php";
 ?>
 
-	
-
-
-
   
   <!-----------======================
     <!-- Content Wrapper. Contains page content -->
@@ -111,7 +107,7 @@ include "./footer.php";
 
 <script>
 $(document).ready(function(e){ 
-$('[data-widget="pushmenu"]').PushMenu('toggle');
+$('[data-widget="pushmenu"]').PushMenu('collapse');
 	var result=RiskinfoReq();
 	appendDataToTable(result)
 	

@@ -65,7 +65,7 @@ echo '
 <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
 <script src="plugins/flot/plugins/jquery.flot.resize.js"></script>
 <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
-<script src="plugins/flot/plugins/jquery.flot.pie.js"></script>	
+<!-- <script src="plugins/flot/plugins/jquery.flot.pie.js"></script>	
 </head>';
-
 ?>
+
