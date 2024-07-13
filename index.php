@@ -1,10 +1,12 @@
 <?php
-session_set_cookie_params(3600); // 1 hour
+session_set_cookie_params(3600 *24); // 24 hour
 session_start(); // 세션 시작
 include "./head.php";
 include "./sidebar.php";
 $visit_date = date('Y-m-d');
+if (count($_SESSION)==0){
 $_SESSION['first_visit']=0;
+}
 ?>
 
 <!-----------======================
@@ -129,34 +131,21 @@ $_SESSION['first_visit']=0;
 		  
 		</div>
 		
-		
-		
-		
-		
 		</div>
 		</section>
-
-
-
-
-
-
-
 </div>
 				
 <?php
 include "./footer.php";
-if ($_SESSION['first_visit']==0){
-$_SESSION['first_visit']=1;
-}
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
 $(document).ready(function(e){
-is_first_visit = <?php echo json_encode($_SESSION); ?>;
+var is_first_visit = <?php echo json_encode($_SESSION); ?>;
 if (is_first_visit['first_visit']==0){
 $('#modal-primary').modal('show');
+<?php $_SESSION['first_visit']=1; ?>
 }
 let myChart; // 전역 변수로 차트 객체를 저장
 $('[data-widget="pushmenu"]').PushMenu('collapse');

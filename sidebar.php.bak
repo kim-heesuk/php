@@ -19,15 +19,19 @@ echo '
       <li class="nav-item d-none d-sm-inline-block">
 	   <a href="mailto:linheedol@gmail.com" class="nav-link">질문</a>
       </li>
-			<li class="nav-item d-none d-sm-inline-block">
-               <a href="#" class="nav-link"  id="visitorCount">Loading... </a>
-			</li>
+			
 	</ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-      <li class="nav-item">
+      
+	  <li class="nav-item d-none d-sm-inline-block">
+               <a href="#" class="nav-link"  id="visitorCount">Loading... </a>
+	  </li>
+			
+	  <!--
+	  <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
@@ -46,7 +50,9 @@ echo '
             </div>
           </form>
         </div>
-      </li>
+		</li>
+		!-->
+      
      
     </ul>
   </nav>
@@ -169,7 +175,7 @@ echo '
             fetch("./Ajax/Counter.php")
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById("visitorCount").innerText = "방문자수 :" + data.count;
+                    document.getElementById("visitorCount").innerText = "방문자수 : " + data.count;
                 })
                 .catch(error => console.error("Error fetching visitor count:", error));
         });
