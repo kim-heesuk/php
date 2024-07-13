@@ -4,8 +4,8 @@ header("Content-type: application/json; charset=utf-8");
 // 클라이언트 IP 주소와 현재 날짜 가져오기
 if ($_SERVER['DOCUMENT_ROOT']=="/workspace"){
 $ip_addresses = getUserIP();
-$ip_addresses['public'] ? $ip_address=$ip_addresses['public'];
-$ip_addresses['Private'] ? $ip_address=$ip_addresses['Private'];
+if ($ip_addresses['public']) {$ip_address=$ip_addresses['public'];}
+else if($ip_addresses['Private']){$ip_address=$ip_addresses['Private'];}
 $visit_date = date('Y-m-d');
 include "./conn.php";
 $sql = "SELECT ip_address,visit_date FROM visit.visits WHERE ip_address = :ip_address AND visit_date = :visit_date";
