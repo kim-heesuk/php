@@ -6,7 +6,7 @@ echo '
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="2024년에 투자할 최고의 ETF를 찾아보세요. ETF 전종목 분석, 인사이트 및 전략을 제공합니다.">
-  <meta name="keywords" content="ETF, ETF 분석, 상장지수펀드, 투자, 주식 시장, 금융, 최고의 ETF, ETF 뉴스">
+  <meta name="keywords" content="ETF, ETF 분석, ETF RISK 분석, ETF 분배금 분석, ETF 배당 분석, 상장지수펀드, 투자, 주식 시장, 금융, 최고의 ETF, ETF 뉴스">
   <meta name="author" content="ETF TRADER">
   <meta name="robots" content="index, follow">
   <title>ETF TRADER</title>
@@ -65,8 +65,8 @@ echo '
 <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
 <script src="plugins/flot/plugins/jquery.flot.resize.js"></script>
 <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
-<script src="plugins/flot/plugins/jquery.flot.pie.js"></script>
-
-	
+<script src="plugins/flot/plugins/jquery.flot.pie.js"></script>	
+<p>To contact us, please <a href="mailto:linheedol@gmail.com">send an email</a>.</p>
 </head>';
+
 ?>

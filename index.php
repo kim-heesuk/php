@@ -170,7 +170,7 @@ background-color: rgba(0,0,0,0.4); /* Black with opacity */
         <p> 본 주소는 cloudtype 의 프리티어 등급으로 관리 중으로 매일1회 중지 됩니다 </p>
 		<p> https://sites.google.com/view/etftrader 주소를 통해서 입장을 권고하며,</p>
 		<p> 운영목적 : 국내 상장된 ETF 분석을 통해 누구나 안정적인 투자를 이어가길 바라는 마음에서 싸이트을 운영합니다.</p>
-		<p> 별도요청 이나 문의는 Contact를 누르고 문의하세요 </p>
+		<p> 문의 : Contact를 누르고 문의하세요 </p>
     </div>
 </div>
 <!-- Content Wrapper. Contains page content -->
@@ -191,13 +191,9 @@ $('[data-widget="pushmenu"]').PushMenu('toggle');
 	  "info": true,
       "buttons": ["excel"],
     });
-	//.buttons().container().appendTo('#divtable_wrapper .col-md-6:eq(0)');
-	
 	const ctx = document.getElementById('myChart');
-	
 	 $('#divtable tbody').on('click', 'tr', function () {
 	var data = divtable.row(this).data();
-	  //console.log("====",data[0],result['graph'][data[0]]);
 	  title=data[0];
 	  label=Object.keys(result['graph'][data[0]]);
 	  const datas=[];
