@@ -161,9 +161,10 @@ include "./footer.php";
 <script>
 
 $(document).ready(function(e){
-<?php if ($is_first_visit): ?>	
+var is_first_visit = <?php echo json_encode($is_first_visit); ?>;
+if (is_first_visit){
 $('#modal-primary').modal('show');
-<?php endif; ?>
+}
 let myChart; // 전역 변수로 차트 객체를 저장
 $('[data-widget="pushmenu"]').PushMenu('collapse');
 
@@ -263,7 +264,7 @@ $('#divtable tbody').on('click', 'tr', function () {
   
  
   
-});
+//});
 
 
 	
