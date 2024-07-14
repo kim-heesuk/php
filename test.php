@@ -32,7 +32,7 @@ $json_string = sendGetRequest($st,$code);
 
 
 $data = json_decode($json_string, true);
-if ($data['response']['body']['totalCount']) > 0){
+if ($data['response']['body']['totalCount'] > 0){
 echo "출력건수:" .$data['response']['body']['totalCount'] ."</br>";
 }
 
