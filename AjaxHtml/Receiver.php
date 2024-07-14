@@ -67,6 +67,12 @@ function handlePostRequest($request,$input) {
 		$result=corrcare($conn);
 	echo json_encode($result);
 	}
+	else if($request=="corrclose"){
+		$startday=$input['startday'];
+		$code=$input['code'];
+		$result=Stock_Close($startday,$code,"90");
+	echo json_encode($result);
+	}
 	
 }
 
