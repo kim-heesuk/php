@@ -48,30 +48,32 @@ include "./footer.php";
 
 <script>
 $(document).ready(function(e){ 
-	TestAjax();
+	var data=CorrinfoReq();
+	console.log(data);
+	
 	
 });
 
-function TestAjax(){
-
-	var id="1";
-	var pw="2";
+function CorrinfoReq(){
+	var result;
 	$.ajax({
-		url: "AjaxHtml/Recever.php",
+		url: "AjaxHtml/Receiver.php",
 		type: "POST",
-		data: JSON.stringify({ id: id, pw: pw }),
+		data: JSON.stringify({ "request": "corrcare"}),
 		contentType: "application/json; charset=utf-8",
-		success: function(data){
-		console.log(data);
-			
-			//$("#result").html(data);
+		async: false, // 동기식 호출
+		success: function(redata){
+			result=redata;
 		},
 		error: function(xhr, status, error){
 		console.log(status,error);
 			$("#result").html("An error occurred: " + error);
-		}
+		},
+		complete : function(xhr, status) {
+		
+		},
 	});
-	
+return result;	
 }
 
 </script>

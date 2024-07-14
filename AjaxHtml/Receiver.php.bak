@@ -54,9 +54,87 @@ function handlePostRequest($request,$input) {
 	echo json_encode($result);
 	}
 	
+	else if($request=="hotword"){
+		$result=hotword($conn);
+	echo json_encode($result);
+	}
+	else if($request=="corrcare"){
+		$result=corrcare($conn);
+	echo json_encode($result);
+	}
 	
 }
 
+function corrcare($conn){
+$codename=array();	
+$sql="select code,name from etfvari.codename";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($results as $row) {
+	$codename[$row['code']]=$row['name'];
+	}
+	
+}
+
+function sendGetRequest($startdate,$code,$num) {
+    // cURL 세션 초기화
+$url="https://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/getETFPriceInfo?";
+$url.="serviceKey=OAs5IRcjVD8bOJlCLWyg9WgN2AohcrPd4x8bZzPxp9XRituQpMTVzGCSyDSTVYmi19NSYmmrpwfuo1bN5G3uSA%3D%3D&";
+$url.="numOfRows=".$num."&pageNo=1&resultType=json&";
+$url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
+    $ch = curl_init();
+    // 옵션 설정
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPGET, true);
+
+    // 요청 실행 및 응답 저장
+    $response = curl_exec($ch);
+
+    // 에러 처리
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+
+    // cURL 세션 닫기
+    curl_close($ch);
+
+    return $response;
+}
+
+
+
+function Stock_Close($st,$code,$num){
+$stackarray=array();
+$json_string = sendGetRequest($st,$code,$num);
+$data = json_decode($json_string, true);
+if ($data['response']['body']['totalCount'] > 0){
+$items=$data['response']['body']['items']['item'];
+$needkeys=array('basDt','srtnCd', 'itmsNm', 'clpr');
+
+foreach ($items as $item => $value){
+  foreach($needkeys as $key => $needkey){
+	$stackarray[$needkey][$item]=$value[$needkey];
+ }
+}
+}
+  foreach($needkeys as $key => $needkey){
+	$stackarray[$needkey][$item]=$value[$needkey];
+	krsort($stackarray[$needkey]);
+ }
+
+return $stackarray;
+}
+
+
+function hotword($conn){
+$sql="select hotword from etfvari.hotword order by vdate desc limit 1";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+return $results;	
+}
 function trendinfo($conn){
 $codename=array();	
 $sql="select code,name from etfvari.codename";
