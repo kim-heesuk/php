@@ -5,6 +5,7 @@ $url="https://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/ge
 $url.="serviceKey=OAs5IRcjVD8bOJlCLWyg9WgN2AohcrPd4x8bZzPxp9XRituQpMTVzGCSyDSTVYmi19NSYmmrpwfuo1bN5G3uSA%3D%3D&";
 $url.="numOfRows=75&pageNo=1&resultType=json&";
 $url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
+echo $url ."</br>";
     $ch = curl_init();
 
     // 옵션 설정
@@ -27,10 +28,14 @@ $url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
 }
 
 // 사용 예시
-$st="startdate";
+$st="20240304";
 $code="114100";
 $json_string = sendGetRequest($st,$code);
+echo $json_string ."</br>";
+
 $data = json_decode($json_string, true);
+print_r($data);
+
 $items=$data['response']['body']['items'];
 $needkeys=array('basDt','srtnCd', 'itmsNm', 'clpr');
 $stackarray=array();

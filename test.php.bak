@@ -5,6 +5,7 @@ $url="https://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/ge
 $url.="serviceKey=OAs5IRcjVD8bOJlCLWyg9WgN2AohcrPd4x8bZzPxp9XRituQpMTVzGCSyDSTVYmi19NSYmmrpwfuo1bN5G3uSA%3D%3D&";
 $url.="numOfRows=75&pageNo=1&resultType=json&";
 $url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
+echo $url ."</br>";
     $ch = curl_init();
 
     // 옵션 설정
@@ -29,21 +30,13 @@ $url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
 // 사용 예시
 $st="startdate";
 $code="114100";
-//$json_string = sendGetRequest($st,$code);
-//$data = json_decode($json_string, true);
-$items[0]['basDt']='22222';
-$items[0]['srtnCd']='aaa';
-$items[0]['itmsNm']='2ffff2222';
-$items[0]['clpr']='2xxxx2222';
+$json_string = sendGetRequest($st,$code);
+echo $json_string ."</br>";
 
-$items[1]['basDt']='ab22222';
-$items[1]['srtnCd']='bbb';
-$items[1]['itmsNm']='cccc2222';
-$items[1]['clpr']='dddd22';
+$data = json_decode($json_string, true);
+print_r($data);
 
-//$items=$data['response']['body']['items'];
-
-
+$items=$data['response']['body']['items'];
 $needkeys=array('basDt','srtnCd', 'itmsNm', 'clpr');
 $stackarray=array();
 foreach ($items as $item => $value){
