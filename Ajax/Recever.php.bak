@@ -36,7 +36,6 @@ function handlePostRequest() {
 	include "./conn.php";
 	$tablename=$input['table'];
 	
-	
     if (isset($input["table"])) {
          $tablename=$input["table"];
         if ($tablename=="codename"){

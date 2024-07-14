@@ -66,6 +66,11 @@ function handlePostRequest() {
 			echo json_encode($result);
 
         }
+		else if($tablename=="hotword"){
+			$result=Revcodename($input,$conn);
+			echo json_encode($result);
+
+        }
        
     } else {
         http_response_code(400);

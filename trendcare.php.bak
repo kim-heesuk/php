@@ -124,7 +124,7 @@ $('[data-widget="pushmenu"]').PushMenu('collapse');
 var hotword=HotWordReq();
 if (hotword.length==1){
 	hotwordlist=hotword[0]['hotword'];
-	$('#hotdata').text('주가등락율  🎆HotWord🎆['+hotwordlist+']');
+	$('#hotdata').text('주가등락율  HotWord['+hotwordlist+']');
 }
 
 var data=TrendinfoReq();
