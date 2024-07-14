@@ -1,6 +1,11 @@
 <?php
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-type: application/json; charset=utf-8");
+include "./conn.php";
+$result=corrcare($conn);
+print_r($result);
+
+/*
 $request_method = $_SERVER["REQUEST_METHOD"];
 switch ($request_method) {
     case 'GET':
@@ -31,7 +36,7 @@ switch ($request_method) {
         echo json_encode(["message" => "Method Not Allowed"]);
         break;
 }
-
+*/
 
 function handlePostRequest($request,$input) {
 	include "./conn.php";
@@ -74,7 +79,34 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($results as $row) {
 	$codename[$row['code']]=$row['name'];
 	}
+
+
+
+$sql="select curdate from etfvari.corrcare order by curdate desc limit 1";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$nrow = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+$sql="select code,analday,curdate, date as finddate ,corr from etfvari.corrcare where curdate = :curdate";
+$stmt = $conn->prepare($sql);
+$stmt->bindValue(':curdate', $nrow[0]['curdate']);
+
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$rdata=array();
+foreach ($results as $row){
+	$row['name']=$codename[$row['code']];
+	if (array_key_exists($row['code'],$rdata)){
+		if ($rdata[$row['code']][4] < $row['corr']){
+		$rdata[$row['code']]=array_values($row);
+		}
+	}else{
+	$rdata[$row['code']]=array_values($row);
+	}
+	}
 	
+return $rdata;
 }
 
 function sendGetRequest($startdate,$code,$num) {
