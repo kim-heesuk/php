@@ -28,7 +28,7 @@ echo $url ."</br>";
 }
 
 // 사용 예시
-$st="startdate";
+$st="20240304";
 $code="114100";
 $json_string = sendGetRequest($st,$code);
 echo $json_string ."</br>";

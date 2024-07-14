@@ -5,9 +5,7 @@ $url="https://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/ge
 $url.="serviceKey=OAs5IRcjVD8bOJlCLWyg9WgN2AohcrPd4x8bZzPxp9XRituQpMTVzGCSyDSTVYmi19NSYmmrpwfuo1bN5G3uSA%3D%3D&";
 $url.="numOfRows=75&pageNo=1&resultType=json&";
 $url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
-echo $url ."</br>";
     $ch = curl_init();
-
     // 옵션 설정
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -31,12 +29,14 @@ echo $url ."</br>";
 $st="20240304";
 $code="114100";
 $json_string = sendGetRequest($st,$code);
-echo $json_string ."</br>";
+
 
 $data = json_decode($json_string, true);
-print_r($data);
+if ($data['response']['body']['totalCount']) > 0){
+echo "출력건수:" .$data['response']['body']['totalCount'] ."</br>";
+}
 
-$items=$data['response']['body']['items'];
+$items=$data['response']['body']['items']['item'];
 $needkeys=array('basDt','srtnCd', 'itmsNm', 'clpr');
 $stackarray=array();
 foreach ($items as $item => $value){
