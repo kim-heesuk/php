@@ -1,6 +1,10 @@
 <?php
-function sendGetRequest($url) {
+function sendGetRequest($startdate,$code) {
     // cURL 세션 초기화
+$url="https://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/getETFPriceInfo?";
+$url.="serviceKey=OAs5IRcjVD8bOJlCLWyg9WgN2AohcrPd4x8bZzPxp9XRituQpMTVzGCSyDSTVYmi19NSYmmrpwfuo1bN5G3uSA%3D%3D&";
+$url.="numOfRows=75&pageNo=1&resultType=json&";
+$url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
     $ch = curl_init();
 
     // 옵션 설정
@@ -23,20 +27,31 @@ function sendGetRequest($url) {
 }
 
 // 사용 예시
-$url="http://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/getETFPriceInfo?";
-$url.="serviceKey=OAs5IRcjVD8bOJlCLWyg9WgN2AohcrPd4x8bZzPxp9XRituQpMTVzGCSyDSTVYmi19NSYmmrpwfuo1bN5G3uSA%3D%3D&";
-$url.="numOfRows=75&pageNo=1&resultType=json&";
-$url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
-$json_string = sendGetRequest($url);
-$data = json_decode($json_string, true);
-$items=$data['response']['body']['items']['item'];
-$needkeys=array('basDt', 'srtnCd', 'itmsNm', 'clpr');
+$st="startdate";
+$code="114100";
+//$json_string = sendGetRequest($st,$code);
+//$data = json_decode($json_string, true);
+$items[0]['basDt']='22222';
+$items[0]['srtnCd']='aaa';
+$items[0]['itmsNm']='2ffff2222';
+$items[0]['clpr']='2xxxx2222';
+
+$items[1]['basDt']='ab22222';
+$items[1]['srtnCd']='bbb';
+$items[1]['itmsNm']='cccc2222';
+$items[1]['clpr']='dddd22';
+
+//$items=$data['response']['body']['items'];
+
+
+$needkeys=array('basDt','srtnCd', 'itmsNm', 'clpr');
 $stackarray=array();
-for ($items as $key => $value){
- for($needkeys as $key => $needkey){
-	$stackarray[$neekey][]=$items[$needkey];
+foreach ($items as $item => $value){
+  foreach($needkeys as $key => $needkey){
+	$stackarray[$needkey][$item]=$value[$needkey];
  }
 }
 print_r($stackarray);
+
 ?>
 

@@ -31,14 +31,15 @@ $st="startdate";
 $code="114100";
 $json_string = sendGetRequest($st,$code);
 $data = json_decode($json_string, true);
-$items=$data['response']['body']['items']['item'];
-$needkeys=array('basDt', 'srtnCd', 'itmsNm', 'clpr');
+$items=$data['response']['body']['items'];
+$needkeys=array('basDt','srtnCd', 'itmsNm', 'clpr');
 $stackarray=array();
-for ($items as $key => $value){
- for($needkeys as $key => $needkey){
-	$stackarray[$neekey][]=$items[$needkey];
+foreach ($items as $item => $value){
+  foreach($needkeys as $key => $needkey){
+	$stackarray[$needkey][$item]=$value[$needkey];
  }
 }
 print_r($stackarray);
+
 ?>
 
