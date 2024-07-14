@@ -118,19 +118,21 @@ var textData = [];
 	
 	const oldvaluesArray = Object.keys(oldvalue)
             .sort((a, b) => b - a)  // 키를 역순으로 정렬
-            .map(key => oldvalue[key]);  // 정렬된 키를 사용하여 값을 배열에 넣기
+            .map(key => Number(oldvalue[key]));  // 정렬된 키를 사용하여 값을 배열에 넣기
 			
 	const curvaluesArray = Object.keys(curvalue)
             .sort((a, b) => b - a)  // 키를 역순으로 정렬
-            .map(key => curvalue[key]);  // 정렬된 키를 사용하여 값을 배열에 넣기
+            .map(key => Number(curvalue[key]));  // 정렬된 키를 사용하여 값을 배열에 넣기
 
         // 결과 출력
         console.log(oldvaluesArray);
 		console.log(curvaluesArray);
 		
-	const data1 = Array.from({length: 80}, () => Math.floor(Math.random() * 10));
-	const data2 = Array.from({length: 70}, () => Math.floor(Math.random() * 10));
-	DrawTwoLine(data1,data2);
+	//const data1 = Array.from({length: 80}, () => Math.floor(Math.random() * 10));
+	//const data2 = Array.from({length: 70}, () => Math.floor(Math.random() * 10));
+	//DrawTwoLine(data1,data2);
+	
+	DrawTwoLine(oldvaluesArray,curvaluesArray);
 	
 	 });
 	
