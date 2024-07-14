@@ -49,7 +49,7 @@ include "./sidebar.php";
 		   <section class="col-lg-7 connectedSortable">
 			<div class="card">
               <div class="card-header">
-                <h3 class="card-title">비교보기</h3>
+                <h3 id="graph_view" class="card-title">비교보기</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -78,7 +78,7 @@ include "./sidebar.php";
 include "./footer.php";
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- <script src="chart-config.js"></script> !--><!-- 아래 JS 코드를 여기서 불러올 수 있습니다 -->
+
 
 <script>
 let chart;
@@ -104,17 +104,10 @@ var textData = [];
 	 var oldstartday=data[rcode][3];
 	 var curstartday=data[rcode][1];
 	 
-	console.log("aaaaaa===",rcode,oldstartday,curstartday);
 	var oldclose=CorrClose(rcode,oldstartday);
 	var curclose=CorrClose(rcode,curstartday);
 	var oldvalue=oldclose['clpr'];
 	var curvalue=curclose['clpr'];
-	
-	console.log("old");
-	console.log(oldvalue);
-	console.log("curclose");
-	console.log(curvalue);
-	//console.log(closevalue);
 	
 	const oldvaluesArray = Object.keys(oldvalue)
             .sort((a, b) => b - a)  // 키를 역순으로 정렬
@@ -123,17 +116,9 @@ var textData = [];
 	const curvaluesArray = Object.keys(curvalue)
             .sort((a, b) => b - a)  // 키를 역순으로 정렬
             .map(key => Number(curvalue[key]));  // 정렬된 키를 사용하여 값을 배열에 넣기
-
-        // 결과 출력
-        console.log(oldvaluesArray);
-		console.log(curvaluesArray);
-		
-	const data1 = Array.from({length: 80}, () => Math.floor(Math.random() * 10));
-	const data2 = Array.from({length: 70}, () => Math.floor(Math.random() * 10));
-	DrawTwoLine(data1,data2);
-	
 	DrawTwoLine(oldvaluesArray,curvaluesArray);
-	
+	$('#graph_view').text("상관도 분석(75거래일): [" +value[1]+" ~ "+value[2]+"]");
+	$('#graph_view').text("비교보기 [" +data[rcode][5] +" ]");
 	 });
 	
 });
