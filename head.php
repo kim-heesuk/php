@@ -5,7 +5,7 @@ echo '<!DOCTYPE html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="2024년에 투자할 최고의 ETF를 찾아보세요. ETF 전종목 분석, 인사이트 및 전략을 제공합니다.">
-  <meta name="keywords" content="ETF, ETF 분석, ETF RISK 분석, ETF 분배금 분석, ETF 배당 분석, 상장지수펀드, 투자, 주식 시장, 금융, 최고의 ETF, ETF 뉴스">
+  <meta name="keywords" content="ETF, ETF 분석, 국내 ETF 비교 사이트, ETF비교,ETF RISK 분석, ETF 분배금 분석, ETF 배당 분석, 상장지수펀드, 투자, 주식 시장, 금융, 최고의 ETF, ETF 뉴스">
   <meta name="author" content="ETF TRADER">
   <meta name="robots" content="index, follow">
   <title>ETF TRADER</title>

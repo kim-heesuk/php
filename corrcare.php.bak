@@ -23,7 +23,6 @@ include "./sidebar.php";
         <div class="row">
           <!-- Left col -->
           <section class="col-lg-7 connectedSortable">
-		  공사중...
 		  </section>
 		</div>
 		

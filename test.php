@@ -56,8 +56,8 @@ function fetch_stock_data($symbol, $start, $end) {
 
 // 사용 예시
 $symbol = 'AAPL';
-$start = '2023-01-01';
-$end = '2023-12-31';
+$start = '2024-01-01';
+$end = '2024-08-01';
 $data = fetch_stock_data($symbol, $start, $end);
 
 // 데이터 출력
