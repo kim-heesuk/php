@@ -101,6 +101,9 @@ var textData = [];
         });
 	 
 	console.log("aaaaaa===",data[tempdata[rowData[0]]] );
+	var closevalue=CorrClose(tempdata[rowData[0],data[tempdata[rowData[0]]][3]);
+	console.log(closevalue);
+	
 	//const data1 = Array.from({length: 80}, () => Math.floor(Math.random() * 10));
 	//const data2 = Array.from({length: 70}, () => Math.floor(Math.random() * 10));
 	//DrawTwoLine(data1,data2);
