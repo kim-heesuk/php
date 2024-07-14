@@ -1,12 +1,6 @@
 <?php
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-type: application/json; charset=utf-8");
-//include "./conn.php";
-//$result=riskinfo($conn);
-//print_r($result);
-//$name="ACE 200";
-//divinfodetail($conn,$name);
-
 $request_method = $_SERVER["REQUEST_METHOD"];
 switch ($request_method) {
     case 'GET':

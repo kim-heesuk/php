@@ -54,9 +54,21 @@ function handlePostRequest($request,$input) {
 	echo json_encode($result);
 	}
 	
+	else if($request=="hotword"){
+		$result=hotword($conn);
+	echo json_encode($result);
+	}
+	
 	
 }
 
+function hotword($conn){
+$sql="select hotword from etfvari.hotword order by vdate desc limit 1";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+return $results;	
+}
 function trendinfo($conn){
 $codename=array();	
 $sql="select code,name from etfvari.codename";

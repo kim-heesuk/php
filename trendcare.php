@@ -3,10 +3,6 @@ include "./head.php";
 include "./sidebar.php";
 ?>
 
-
-
-  <!-- /.navbar -->
-
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.flash.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
@@ -23,7 +19,7 @@ include "./sidebar.php";
 	      <section class="col-lg-12 connectedSortable">
 			<div class="card">
               <div class="card-header">
-                <h3 class="card-title">주가등락율</h3>
+                <h3 id="hotdata" class="card-title">주가등락율</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -125,6 +121,12 @@ include "./footer.php";
 $(document).ready(function(e){ 
 $('[data-widget="pushmenu"]').PushMenu('collapse');
 
+var hotword=HotWordReq();
+if (hotword.length==1){
+	hotwordlist=hotword[0]['hotword'];
+	$('#hotdata').text('주가등락율  😊HotWord['+hotwordlist+']');
+}
+
 var data=TrendinfoReq();
 appendDataToTable(data);
 appendDataToTable2(data);
@@ -167,10 +169,30 @@ function TrendinfoReq(){
 	});
 return result;	
 }
-
+function HotWordReq(){
+	var result;
+	$.ajax({
+		url: "AjaxHtml/Receiver.php",
+		type: "POST",
+		data: JSON.stringify({ "request": "hotword"}),
+		contentType: "application/json; charset=utf-8",
+		async: false, // 동기식 호출
+		success: function(redata){
+			result=redata;
+		},
+		error: function(xhr, status, error){
+		console.log(status,error);
+			$("#result").html("An error occurred: " + error);
+		},
+		complete : function(xhr, status) {
+		
+		},
+	});
+return result;	
+}
 
 function appendDataToTable(data) {
-	console.log("Received data:", data);
+	//console.log("Received data:", data);
 	var trendtable = $('#trendtable tbody');
 	data.forEach(function(row) {
 		var newRow = '<tr>' +
@@ -196,7 +218,7 @@ function appendDataToTable(data) {
 
 
 function appendDataToTable2(data) {
-	console.log("Received data:", data);
+	//console.log("Received data:", data);
 	var trendtable2 = $('#trendtable2 tbody');
 	data.forEach(function(row) {
 		var newRow2 = '<tr>' +
@@ -224,7 +246,7 @@ function appendDataToTable2(data) {
 			newRow2 +='<td>'+row[22].toLocaleString() +'</td>';
 			}
 			newRow2 +='</tr>';
-			console.log(newRow2);
+			//console.log(newRow2);
 			
 		trendtable2.append(newRow2);
 	});
