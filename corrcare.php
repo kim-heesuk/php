@@ -78,7 +78,7 @@ include "./sidebar.php";
 include "./footer.php";
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="chart-config.js"></script> <!-- 아래 JS 코드를 여기서 불러올 수 있습니다 -->
+<!-- <script src="chart-config.js"></script> !--><!-- 아래 JS 코드를 여기서 불러올 수 있습니다 -->
 
 <script>
 let chart;
@@ -100,13 +100,22 @@ var textData = [];
 	 $(this).find('td').each(function(index) {
         });
 	 
-	console.log("aaaaaa===",data[tempdata[rowData[0]]] );
-	var closevalue=CorrClose(tempdata[rowData[0],data[tempdata[rowData[0]]][3]);
-	console.log(closevalue);
+	 var rcode=tempdata[rowData[0]];
+	 var oldstartday=data[rcode][3];
+	 var curstartday=data[rcode][1];
+	 
+	console.log("aaaaaa===",rcode,oldstartday,curstartday);
+	var oldclose=CorrClose(rcode,oldstartday);
+	var curclose=CorrClose(rcode,oldstartday);
+	console.log("old");
+	console.log(oldclose);
+	console.log("curclose");
+	console.log(curclose);
+	//console.log(closevalue);
 	
-	//const data1 = Array.from({length: 80}, () => Math.floor(Math.random() * 10));
-	//const data2 = Array.from({length: 70}, () => Math.floor(Math.random() * 10));
-	//DrawTwoLine(data1,data2);
+	const data1 = Array.from({length: 80}, () => Math.floor(Math.random() * 10));
+	const data2 = Array.from({length: 70}, () => Math.floor(Math.random() * 10));
+	DrawTwoLine(data1,data2);
 	
 	 });
 	
