@@ -1,6 +1,10 @@
 <?php
-function sendGetRequest($url) {
+function sendGetRequest($startdate,$code) {
     // cURL 세션 초기화
+$url="https://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/getETFPriceInfo?";
+$url.="serviceKey=OAs5IRcjVD8bOJlCLWyg9WgN2AohcrPd4x8bZzPxp9XRituQpMTVzGCSyDSTVYmi19NSYmmrpwfuo1bN5G3uSA%3D%3D&";
+$url.="numOfRows=75&pageNo=1&resultType=json&";
+$url.="beginBasDt=".$startdate."&likeSrtnCd=".$code;
     $ch = curl_init();
 
     // 옵션 설정
@@ -23,9 +27,18 @@ function sendGetRequest($url) {
 }
 
 // 사용 예시
-$url = "https://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/getETFPriceInfo?";
-$url .="serviceKey=OAs5IRcjVD8bOJlCLWyg9WgN2AohcrPd4x8bZzPxp9XRituQpMTVzGCSyDSTVYmi19NSYmmrpwfuo1bN5G3uSA%3D%3D&numOfRows=1&pageNo=1&resultType=josn";
-$response = sendGetRequest($url);
-echo $response;
+$st="startdate";
+$code="114100";
+$json_string = sendGetRequest($st,$code);
+$data = json_decode($json_string, true);
+$items=$data['response']['body']['items']['item'];
+$needkeys=array('basDt', 'srtnCd', 'itmsNm', 'clpr');
+$stackarray=array();
+for ($items as $key => $value){
+ for($needkeys as $key => $needkey){
+	$stackarray[$neekey][]=$items[$needkey];
+ }
+}
+print_r($stackarray);
 ?>
 
