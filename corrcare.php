@@ -58,16 +58,8 @@ include "./sidebar.php";
               <!-- /.card-body -->
             </div>
 		  </section>
-		  
-         
          
 		</div>
-		
-		
-		
-		
-		
-		
 		</div>
 		</section>
 

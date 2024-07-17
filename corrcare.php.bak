@@ -117,7 +117,6 @@ var textData = [];
             .sort((a, b) => b - a)  // 키를 역순으로 정렬
             .map(key => Number(curvalue[key]));  // 정렬된 키를 사용하여 값을 배열에 넣기
 	DrawTwoLine(oldvaluesArray,curvaluesArray);
-	$('#graph_view').text("상관도 분석(75거래일): [" +value[1]+" ~ "+value[2]+"]");
 	$('#graph_view').text("비교보기 [" +data[rcode][5] +" ]");
 	 });
 	

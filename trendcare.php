@@ -6,7 +6,7 @@ include "./sidebar.php";
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.flash.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
-
+    
 	
 <div class="content-wrapper">
     <!-- Main content -->
@@ -19,8 +19,19 @@ include "./sidebar.php";
 	      <section class="col-lg-12 connectedSortable">
 			<div class="card">
               <div class="card-header">
-                <h3 id="hotdata" class="card-title">주가등락율</h3>
+                <div class="row" >
+				<h3 id="hotdata" class="card-title">주가등락율</h3>
+				</div>
+				<div class="row" >
+				
+					<div class="col-lg-9"> </div>
+					<div class="col-lg-3">
+					<h3 class="card-title">동시검색</h3>  <input type="text" id="searchBox" placeholder="검색"> 
+					</div>
+				</div>
               </div>
+			  
+			  
               <!-- /.card-header -->
               <div class="card-body">
                 <!-- <table id="risktable" class="table table-bordered table-striped"> !-->
@@ -131,21 +142,32 @@ var data=TrendinfoReq();
 appendDataToTable(data);
 appendDataToTable2(data);
 
-	$('#trendtable').DataTable({
+	var table1= $('#trendtable').DataTable({
 				dom: 'Bfrtip',
-				buttons: ['excel']
+				buttons: ['excel'],
 			});
 		
 	
-	$('#trendtable2').DataTable({
+	var table2= $('#trendtable2').DataTable({
 			dom: 'Bfrtip',
 			buttons: ['excel']
 	});
 
+    // Optional: If you want to synchronize search input box with both tables
+    $('#searchBox').on('keyup', function() {
+        var searchTerm = $(this).val();
+        table1.search(searchTerm).draw();
+        table2.search(searchTerm).draw();
+    });
+	
 	
 });
 
+function searchData(value,table){
+console.log(value);
+console.log(table);
 
+}
 
 //////////////////////////////////////
 function TrendinfoReq(){
